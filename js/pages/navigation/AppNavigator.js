@@ -7,6 +7,7 @@ import OrderManage from "../orderManage/index";
 import MyPage from "../myPage/index";
 import Login from '../login/index'
 import OrderDetails from '../orderManage/details'
+import AddWaste from '../orderManage/addWaste'
 
 const BottomNavigator =  createMaterialBottomTabNavigator({
   Index: {screen: IndexPage},
@@ -30,6 +31,9 @@ export default createAppContainer(
     },
     OrderDetails: {
       screen: OrderDetails
+    },
+    AddWaste: {
+      screen: AddWaste
     }
   },{
     initialRouteName: 'Login',

@@ -16,8 +16,8 @@ TitleInfo.propTypes = {
 }
 const styles = StyleSheet.create({
   title: {
-    height: 40,
-    backgroundColor: '#f4f4f4',
+    height: 50,
+    backgroundColor: '#f9f9f9',
     justifyContent: 'center',
     paddingLeft: 10,
   }

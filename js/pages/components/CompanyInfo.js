@@ -1,85 +1,130 @@
 import React, { useState } from 'react';
 import {View, Text, StyleSheet, TextInput } from 'react-native';
+import { List, Picker } from '@ant-design/react-native';
 import TitleInfo from './TitleInfo'
-
+const pickerData = [
+  {
+    value: '1',
+    label: '转移无误-确认'
+  },
+  {
+    value: '2',
+    label: '货物与转移不符-退回'
+  },
+]
 const CompanyInfo = (props) => {
-  const [phone, setPhone] = useState('')
+  const [phone, setPhone] = useState('423423423')
+  const [pickerValue, setPickerValue] = useState('')
+  const onChange = (value) => {
+    setPickerValue(value)
+  }
   return (
     <View>
       <TitleInfo title='产废单位信息'/>
-      <View style={styles.content}>
-        <Text style={{width: '30%'}}>企业名称</Text>
-        <TextInput
-          style={styles.input}
-          // onChangeText={text => onChangeText(text)}
-          editable={false}
-          value={phone}
-        />
-      </View>
-      <View style={styles.content}>
-        <Text style={{width: '30%'}}>组织机构代码</Text>
-        <TextInput
-          style={styles.input}
-          // onChangeText={text => onChangeText(text)}
-          value={phone}
-        />
-      </View>
-      <View style={styles.content}>
-        <Text style={{width: '30%'}}>工商注册地址</Text>
-        <TextInput
-          style={styles.input}
-          // onChangeText={text => onChangeText(text)}
-          value={phone}
-        />
-      </View>
-      <View style={styles.content}>
-        <Text style={{width: '30%'}}>负责人</Text>
-        <TextInput
-          style={styles.input}
-          // onChangeText={text => onChangeText(text)}
-          value={phone}
-        />
-      </View>
-      <View style={styles.content}>
-        <Text style={{width: '30%'}}>负责人联系电话</Text>
-        <TextInput
-          style={styles.input}
-          // onChangeText={text => onChangeText(text)}
-          value={phone}
-        />
-      </View>
-      <View style={styles.content}>
-        <Text style={{width: '30%'}}>处置单位</Text>
-        <TextInput
-          style={styles.input}
-          // onChangeText={text => onChangeText(text)}
-          value={phone}
-        />
-      </View>
-      <View style={styles.content}>
-        <Text style={{width: '30%'}}>司机</Text>
-        <TextInput
-          style={styles.input}
-          // onChangeText={text => onChangeText(text)}
-          value={phone}
-        />
-      </View>
-      <View style={styles.content}>
-        <Text style={{width: '30%'}}>车牌</Text>
-        <TextInput
-          style={styles.input}
-          // onChangeText={text => onChangeText(text)}
-          value={phone}
-        />
-      </View>
-      <View style={styles.content}>
-        <Text style={{width: '30%'}}>处置单位</Text>
-        <TextInput
-          style={styles.input}
-          // onChangeText={text => onChangeText(text)}
-          value={phone}
-        />
-      </View>
+      <List>
+        <List.Item>
+          <View style={styles.content}>
+            <Text style={styles.font}>企业名称</Text>
+            <TextInput
+              style={styles.input}
+              // onChangeText={text => onChangeText(text)}
+              editable={false}
+              value={phone}
+            />
+          </View>
+        </List.Item>
+        <List.Item>
+          <View style={styles.content}>
+            <Text style={styles.font}>组织机构代码</Text>
+            <TextInput
+              style={styles.input}
+              // onChangeText={text => onChangeText(text)}
+              value={phone}
+              editable={false}
+            />
+          </View>
+        </List.Item>
+        <List.Item>
+          <View style={styles.content}>
+            <Text style={styles.font}>工商注册地址</Text>
+            <TextInput
+              style={styles.input}
+              // onChangeText={text => onChangeText(text)}
+              value={phone}
+              editable={false}
+            />
+          </View>
+        </List.Item>
+        <List.Item>
+          <View style={styles.content}>
+            <Text style={styles.font}>负责人</Text>
+            <TextInput
+              style={styles.input}
+              // onChangeText={text => onChangeText(text)}
+              value={phone}
+              editable={false}
+            />
+          </View>
+        </List.Item>
+        <List.Item>
+          <View style={styles.content}>
+            <Text style={styles.font}>负责人联系电话</Text>
+            <TextInput
+              style={styles.input}
+              // onChangeText={text => onChangeText(text)}
+              value={phone}
+              editable={false}
+            />
+          </View>
+        </List.Item>
+        <List.Item>
+          <View style={styles.content}>
+            <Text style={styles.font}>处置单位</Text>
+            <TextInput
+              style={styles.input}
+              // onChangeText={text => onChangeText(text)}
+              value={phone}
+              editable={false}
+            />
+          </View>
+        </List.Item>
+        <View>
+          <Picker
+            data={pickerData}
+            cols={1}
+            value={pickerValue}
+            onChange={onChange}
+          >
+            <List.Item arrow="horizontal" style={{height: 50}}>
+              司机
+            </List.Item>
+          </Picker>
+        </View>
+        <View>
+          <Picker
+            data={pickerData}
+            cols={1}
+            value={pickerValue}
+            onChange={onChange}
+          >
+            <List.Item arrow="horizontal" style={{height: 50}}>
+              车牌
+            </List.Item>
+          </Picker>
+        </View>
+        <View>
+          <Picker
+            data={pickerData}
+            cols={1}
+            value={pickerValue}
+            onChange={onChange}
+          >
+            <List.Item arrow="horizontal" style={{height: 50}}>
+              处置单位
+            </List.Item>
+          </Picker>
+        </View>
+      </List>
     </View>
   );
 }
@@ -87,18 +132,18 @@ const CompanyInfo = (props) => {
 const styles = StyleSheet.create({
   content: {
     flexDirection: 'row',
-    paddingLeft: 10,
-    marginTop: 10,
-    marginBottom: 10,
     alignItems: 'center',
   },
   input: {
-    height: 30,
     width: '65%',
-    borderColor: '#5ab0ff',
-    borderWidth: 1,
-    borderRadius: 4,
     paddingLeft: 10,
+    textAlign: 'right',
+    fontSize: 18,
+    height: 42
+  },
+  font: {
+    width: '35%',
+    fontSize: 18
   },
 });
 

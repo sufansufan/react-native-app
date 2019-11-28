@@ -19,16 +19,17 @@ export default class OrderManage extends Component {
             <SafeAreaView style={{flex:1}}>
                 <View style={styles.container}>
                     <NavBar {...this.props} hideLeft={true} title='联单管理'></NavBar>
-                    <ScrollView
-                        style={{ flex: 1 }}
-                        automaticallyAdjustContentInsets={false}
-                        showsHorizontalScrollIndicator={false}
-                        showsVerticalScrollIndicator={false}
-                    >
-                        <List>
-                            <ListItem {...this.props}></ListItem>
-                        </List>
-                    </ScrollView>
+                    <View style={styles.scrollContainer}>
+                        <ScrollView
+                            automaticallyAdjustContentInsets={false}
+                            showsHorizontalScrollIndicator={false}
+                            showsVerticalScrollIndicator={false}
+                        >
+                            <List>
+                                <ListItem {...this.props}></ListItem>
+                            </List>
+                        </ScrollView>
+                    </View>
                 </View>
             </SafeAreaView>
         );
@@ -42,5 +43,8 @@ const styles = StyleSheet.create({
   tabBarIcon: {
     width: 21,
     height: 21,
+  },
+  scrollContainer: {
+    height: '93%',
   }
 });
