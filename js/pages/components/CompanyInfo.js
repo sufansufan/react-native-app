@@ -22,72 +22,59 @@ const CompanyInfo = (props) => {
     <View>
       <TitleInfo title='产废单位信息'/>
       <List>
-        <List.Item>
-          <View style={styles.content}>
-            <Text style={styles.font}>企业名称</Text>
-            <TextInput
-              style={styles.input}
-              // onChangeText={text => onChangeText(text)}
-              editable={false}
-              value={phone}
-            />
-          </View>
-        </List.Item>
-        <List.Item>
-          <View style={styles.content}>
-            <Text style={styles.font}>组织机构代码</Text>
-            <TextInput
-              style={styles.input}
-              // onChangeText={text => onChangeText(text)}
-              value={phone}
-              editable={false}
-            />
-          </View>
-        </List.Item>
-        <List.Item>
-          <View style={styles.content}>
-            <Text style={styles.font}>工商注册地址</Text>
-            <TextInput
-              style={styles.input}
-              // onChangeText={text => onChangeText(text)}
-              value={phone}
-              editable={false}
-            />
-          </View>
-        </List.Item>
-        <List.Item>
-          <View style={styles.content}>
-            <Text style={styles.font}>负责人</Text>
-            <TextInput
-              style={styles.input}
-              // onChangeText={text => onChangeText(text)}
-              value={phone}
-              editable={false}
-            />
-          </View>
-        </List.Item>
-        <List.Item>
-          <View style={styles.content}>
-            <Text style={styles.font}>负责人联系电话</Text>
-            <TextInput
-              style={styles.input}
-              // onChangeText={text => onChangeText(text)}
-              value={phone}
-              editable={false}
-            />
-          </View>
-        </List.Item>
-        <List.Item>
-          <View style={styles.content}>
-            <Text style={styles.font}>处置单位</Text>
-            <TextInput
-              style={styles.input}
-              // onChangeText={text => onChangeText(text)}
-              value={phone}
-              editable={false}
-            />
-          </View>
-        </List.Item>
+        <View style={styles.content}>
+          <Text style={styles.font}>企业名称</Text>
+          <TextInput
+            style={styles.input}
+            // onChangeText={text => onChangeText(text)}
+            editable={false}
+            value={phone}
+          />
+        </View>
+        <View style={[styles.content, styles.border]}>
+          <Text style={styles.font}>组织机构代码</Text>
+          <TextInput
+            style={styles.input}
+            // onChangeText={text => onChangeText(text)}
+            value={phone}
+          />
+        </View>
+        <View style={styles.content}>
+          <Text style={styles.font}>工商注册地址</Text>
+          <TextInput
+            style={styles.input}
+            // onChangeText={text => onChangeText(text)}
+            value={phone}
+            editable={false}
+          />
+        </View>
+        <View style={styles.content}>
+          <Text style={styles.font}>负责人</Text>
+          <TextInput
+            style={styles.input}
+            // onChangeText={text => onChangeText(text)}
+            value={phone}
+            editable={false}
+          />
+        </View>
+        <View style={styles.content}>
+          <Text style={styles.font}>负责人联系电话</Text>
+          <TextInput
+            style={styles.input}
+            // onChangeText={text => onChangeText(text)}
+            value={phone}
+            editable={false}
+          />
+        </View>
+        <View style={styles.content}>
+          <Text style={styles.font}>处置单位</Text>
+          <TextInput
+            style={styles.input}
+            // onChangeText={text => onChangeText(text)}
+            value={phone}
+            editable={false}
+          />
+        </View>
         <View>
           <Picker
             data={pickerData}
@@ -133,13 +120,18 @@ const styles = StyleSheet.create({
   content: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginLeft: 15,
+    paddingRight: 15,
+    height: 45,
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#ddd'
   },
   input: {
     width: '65%',
     paddingLeft: 10,
     textAlign: 'right',
     fontSize: 18,
-    height: 42
+    padding: 0,
   },
   font: {
     width: '35%',

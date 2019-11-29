@@ -46,17 +46,16 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     paddingTop: 10,
     alignItems: 'center',
-    borderBottomWidth: 1,
-    borderColor: '#f9f9f9',
-
+    borderBottomWidth: 0.5,
+    borderColor: '#ddd',
   },
   input: {
-    height: 40,
     width: '60%',
     paddingLeft: 10,
     textAlign: 'right',
     marginRight: 10,
-    fontSize: 18
+    fontSize: 18,
+    padding: 0,
   },
   font: {
     width: '30%',

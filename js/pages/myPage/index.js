@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { View, Text, Image, StyleSheet, SafeAreaView} from 'react-native';
 import { List } from '@ant-design/react-native';
+import NavBar from "../components/NavBar";
 const Item = List.Item;
 
 const url = 'https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/crop%3D0%2C185%2C700%2C462%3Bc0%3Dbaike92%2C5%2C5%2C92%2C30/sign=4a46f83ddf43ad4bb2611c80bf32769e/d788d43f8794a4c2ee6be2b300f41bd5ac6e39d9.jpg'
@@ -16,13 +17,14 @@ export default class MyPage extends Component {
     return (
       <SafeAreaView style={{ flex: 1}}>
         <View style={styles.container}>
+          <NavBar {...this.props} hideLeft={true} hideRight={true} title='个人中心'></NavBar>
           <View style={styles.titleBox}>
             <View style={styles.titleImage}>
               <Image  style={{width: '100%', height: '100%'}} source={{uri: url}}></Image>
             </View>
             <View style={{ height: 80, justifyContent: 'center'}}>
-              <Text style={styles.titleText}>苏凡</Text>
-              <Text>17812341234</Text>
+              <Text style={styles.titleText}>用户名：张三</Text>
+              <Text style={styles.titleText}>联系电话：17812341234</Text>
             </View>
           </View>
           <View>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Image, StyleSheet, SafeAreaView } from 'react-native';
 import Title from './components/Title'
 import TabBar from './components/Tabs'
+import NavBar from "../components/NavBar";
 
 export default class IndexPage extends Component {
   static navigationOptions = {
@@ -14,7 +15,8 @@ export default class IndexPage extends Component {
     return (
       <SafeAreaView style={{flex: 1}}>
         <View style={styles.container}>
-          <View style={{paddingBottom: 10, backgroundColor: '#fff'}}>
+          <NavBar {...this.props} hideLeft={true} hideRight={true} title='首页'></NavBar>
+          <View style={{paddingBottom: 10, paddingTop: 10, backgroundColor: '#fff'}}>
             <Title></Title>
           </View>
           <TabBar></TabBar>

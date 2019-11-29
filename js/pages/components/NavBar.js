@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {View, Text, Image, StatusBar, StyleSheet, TouchableOpacity  } from 'react-native';
-import { Picker, Provider } from '@ant-design/react-native';
+import { Picker } from '@ant-design/react-native';
 import PropTypes from "prop-types"
 
 const NavBar = (props) => {
@@ -23,10 +23,9 @@ const NavBar = (props) => {
     cosnole.log(value)
   }
   return (
-    <Provider>
       <View style={styles.container}>
-        <StatusBar backgroundColor="#5ab0ff" barStyle="light-content" />
-        <View>
+        {/* <StatusBar backgroundColor="#5ab0ff" barStyle="light-content" /> */}
+        <View style={styles.left}>
           {hideLeft ? null : (<TouchableOpacity onPress={pressLeft}>
             <View style={styles.left}>
               <Image style={styles.image} source={require('../../images/back.png')} />
@@ -37,7 +36,7 @@ const NavBar = (props) => {
         <View>
           <Text style={[styles.tilte]}>{title}</Text>
         </View>
-        <View>
+        <View style={styles.left}>
           {hideRight ? null : (
               <Picker
                 data={pickerData}
@@ -53,8 +52,6 @@ const NavBar = (props) => {
           )}
         </View>
       </View>
-    </Provider>
-
   )
 }
 NavBar.propTypes = {
@@ -80,20 +77,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingLeft: 10,
     paddingRight: 10,
-    position: 'relative',
-    top: 0,
-    left: 0,
   },
   tilte: {
-    fontSize: 18
+    fontSize: 18,
+    marginLeft: -10,
   },
   image: {
-    width: 20,
-    height: 20,
-    marginTop: 2,
+    width: 15,
+    height: 18,
+    marginTop: 1
   },
   left: {
     flexDirection: 'row',
+    minWidth: 20,
   }
 })
 

@@ -34,23 +34,31 @@ const ChangeInfo = (props) => {
     return (
       <Accordion.Panel header={item.title} key={index}>
         <List>
-          {item.children.length ? item.children.map((val, i) => (
-            <List.Item style={styles.listBox} key={i + '1'}>
-              <View style={styles.listContent}>
-                <View>
-                  <Text style={{fontSize: 16}}>
-                    {val.title}
-                  </Text>
+          {item.children.length ? <View>{
+            item.children.map((val, i) => (
+              <List.Item style={styles.listBox} key={i + '1'}>
+                <View style={styles.listContent}>
+                  <View>
+                    <Text style={{fontSize: 16}}>
+                      {val.title}
+                    </Text>
+                  </View>
+                  <View style={styles.listText}>
+                    <Text style={{fontSize: 16}} numberOfLines={1}>
+                      {val.name}
+                    </Text>
+                  </View>
                 </View>
-                <View style={styles.listText}>
-                  <Text style={{fontSize: 16}} numberOfLines={1}>
-                    {val.name}
-                  </Text>
-                </View>
-              </View>
-            </List.Item>
-          )) : null }
-
+              </List.Item>
+            ))}
+            <View style={{marginTop: 30, marginBottom: 30}}>
+              <Button onPress={()=> { }} style={{width: '80%', marginLeft: '10%', borderColor: 'red'}} >
+                <Text style={{color: 'red'}}>
+                  删除
+                </Text>
+              </Button>
+            </View>
+            </View> : null }
         </List>
       </Accordion.Panel>
     )
@@ -67,8 +75,8 @@ const ChangeInfo = (props) => {
             {accordionList}
           </Accordion>
         </TouchableOpacity>
-        <View style={{marginTop: 20}}>
-          <Button Icon='plus' onPress={()=> {navigation.push('AddWaste')}}>
+        <View style={{marginTop: 50, marginBottom: 20}}>
+          <Button Icon='plus' onPress={()=> {navigation.push('AddWaste')}} style={{width: '80%', marginLeft: '10%'}}>
             <Icon name='plus' color='#108ee9' size='xxs'/>
             <Text style={styles.buttonBox}>
               新增固废
@@ -84,7 +92,6 @@ const ChangeInfo = (props) => {
 const styles = StyleSheet.create({
   list: {
     flex: 1,
-    padding: 10,
   },
   listBox: {
     backgroundColor: '#f9f9f9',

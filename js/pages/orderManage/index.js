@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, ScrollView, Image, StyleSheet, SafeAreaView } from 'react-native';
 import NavBar from "../components/NavBar";
-import { List } from '@ant-design/react-native';
+import { List, Provider } from '@ant-design/react-native';
 import ListItem from './components/List'
 
 export default class OrderManage extends Component {
@@ -18,18 +18,19 @@ export default class OrderManage extends Component {
         return (
             <SafeAreaView style={{flex:1}}>
                 <View style={styles.container}>
-                    <NavBar {...this.props} hideLeft={true} title='联单管理'></NavBar>
-                    <View style={styles.scrollContainer}>
-                        <ScrollView
-                            automaticallyAdjustContentInsets={false}
-                            showsHorizontalScrollIndicator={false}
-                            showsVerticalScrollIndicator={false}
-                        >
-                            <List>
+                    <Provider>
+                        <NavBar {...this.props} hideLeft={true} title='联单管理'></NavBar>
+                        <View style={styles.scrollContainer}>
+                            <ScrollView
+                                automaticallyAdjustContentInsets={false}
+                                showsHorizontalScrollIndicator={false}
+                                showsVerticalScrollIndicator={false}
+                            >
+
                                 <ListItem {...this.props}></ListItem>
-                            </List>
-                        </ScrollView>
-                    </View>
+                            </ScrollView>
+                        </View>
+                    </Provider>
                 </View>
             </SafeAreaView>
         );
