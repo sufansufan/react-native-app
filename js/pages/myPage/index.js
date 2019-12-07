@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { View, Text, Image, StyleSheet, SafeAreaView} from 'react-native';
 import { List } from '@ant-design/react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import NavBar from "../components/NavBar";
 const Item = List.Item;
 
@@ -13,7 +14,21 @@ export default class MyPage extends Component {
       focused ? <Image style={styles.tabBarIcon} source={require('../../images/my_action.png')}/> :  <Image style={styles.tabBarIcon} source={require('../../images/my.png')}/>
     ),
   };
+  constructor(props) {
+    super(props)
+    this.state = {
+       userInfo: ''
+    }
+  }
+
+  async componentDidMount() {
+    let info = JSON.parse(await AsyncStorage.getItem('userInfo'))
+    this.setState({
+      userInfo: info
+    })
+  }
   render() {
+    const { userInfo } = this.state
     return (
       <SafeAreaView style={{ flex: 1}}>
         <View style={styles.container}>
@@ -23,8 +38,8 @@ export default class MyPage extends Component {
               <Image  style={{width: '100%', height: '100%'}} source={{uri: url}}></Image>
             </View>
             <View style={{ height: 80, justifyContent: 'center'}}>
-              <Text style={styles.titleText}>用户名：张三</Text>
-              <Text style={styles.titleText}>联系电话：17812341234</Text>
+              <Text style={styles.titleText}>用户名：{userInfo.name}</Text>
+              <Text style={styles.titleText}>联系电话：1387814123</Text>
             </View>
           </View>
           <View>

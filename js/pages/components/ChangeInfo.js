@@ -1,38 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {View, StyleSheet,Text, TouchableOpacity } from 'react-native';
 import { Accordion, List, Button, Icon } from '@ant-design/react-native';
 import TitleInfo from './TitleInfo'
+import PropTypes from 'prop-types'
+import AsyncStorage from '@react-native-community/async-storage';
+import { handlerWaste } from '../../utils/index'
+import NoData from './noData'
+
 const ChangeInfo = (props) => {
-  const { navigation } = props
-  const [activeSections, setActiveSections] = useState([1])
-  const [changeInfo, setChangeInfo] = useState([{
-    title: '固废名称',
-    name: '某某固废',
-    children: [
-      {
-        title: '固废来源:',
-        name: '3423424434',
-      },
-      {
-        title: '储存地点:',
-        name: '3423423444',
-      },
-      {
-        title: '固废吨数:',
-        name: '34234234444',
-      },
-      {
-        title: '备注:',
-        name: '342342344234',
+  const { navigation, edit, wasteInfo } = props
+  const [activeSections, setActiveSections] = useState([])
+  const [changeInfo, setChangeInfo] = useState([])
+  useEffect(() => {
+    (async function () {
+      if(edit) {
+        let data = JSON.parse(await AsyncStorage.getItem('wasteInfo'))
+        await setChangeInfo(handlerWaste(data))
+      }else {
+        setChangeInfo(handlerWaste(wasteInfo))
       }
-    ]
-  }])
+    })()
+    return () => {
+      // JSON.parse(await AsyncStorage.getItem('wasteInfo'))
+    }
+  },[wasteInfo])
   const onChange = activeSections => {
     setActiveSections(activeSections)
   }
-  const accordionList = changeInfo.map((item, index) => {
+  const deleteWaste = async(index) => {
+    let data = JSON.parse(await AsyncStorage.getItem('wasteInfo'))
+    data.splice(index, 1)
+    await AsyncStorage.setItem('wasteInfo', JSON.stringify(data))
+    await setChangeInfo(handlerWaste(data))
+  }
+  const accordionList = changeInfo.length && changeInfo.map((item, index) => {
     return (
-      <Accordion.Panel header={item.title} key={index}>
+      <Accordion.Panel header={item.title + ` (${item.name}固废)`} key={index}>
         <List>
           {item.children.length ? <View>{
             item.children.map((val, i) => (
@@ -51,13 +54,13 @@ const ChangeInfo = (props) => {
                 </View>
               </List.Item>
             ))}
-            <View style={{marginTop: 30, marginBottom: 30}}>
-              <Button onPress={()=> { }} style={{width: '80%', marginLeft: '10%', borderColor: 'red'}} >
-                <Text style={{color: 'red'}}>
-                  删除
-                </Text>
-              </Button>
-            </View>
+              { edit ? (<View style={{marginTop: 30, marginBottom: 30}}>
+                <Button onPress={deleteWaste.bind(this, index)} style={{width: '80%', marginLeft: '10%', borderColor: 'red'}} >
+                  <Text style={{color: 'red'}}>
+                    删除
+                  </Text>
+                </Button>
+              </View>) : null}
             </View> : null }
         </List>
       </Accordion.Panel>
@@ -67,26 +70,31 @@ const ChangeInfo = (props) => {
     <View>
       <TitleInfo title='固废转移信息'/>
       <View style={styles.list}>
-        <TouchableOpacity>
+        {changeInfo.length ? <TouchableOpacity>
           <Accordion
             onChange={onChange}
             activeSections={activeSections}
           >
             {accordionList}
           </Accordion>
-        </TouchableOpacity>
-        <View style={{marginTop: 50, marginBottom: 20}}>
-          <Button Icon='plus' onPress={()=> {navigation.push('AddWaste')}} style={{width: '80%', marginLeft: '10%'}}>
+        </TouchableOpacity> : edit ? null : <NoData/>}
+        {edit ? (<View style={{marginTop: 50, marginBottom: 20}}>
+          <Button Icon='plus' onPress={()=> {navigation.replace('AddWaste')}} style={{width: '80%', marginLeft: '10%'}}>
             <Icon name='plus' color='#108ee9' size='xxs'/>
             <Text style={styles.buttonBox}>
               新增固废
             </Text>
           </Button>
-        </View>
+        </View>) : null}
       </View>
     </View>
 
   );
+}
+
+ChangeInfo.propTypes = {
+  edit: PropTypes.bool,
+  wasteInfo: PropTypes.array
 }
 
 const styles = StyleSheet.create({

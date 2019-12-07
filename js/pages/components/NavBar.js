@@ -4,24 +4,7 @@ import { Picker } from '@ant-design/react-native';
 import PropTypes from "prop-types"
 
 const NavBar = (props) => {
-  const { hideLeft, hideRight, pressLeft, pressRight, title} = props
-  const pickerData= [
-    {
-      value: '1',
-      label: '分配司机'
-    },
-    {
-      value: '2',
-      label: '签收'
-    },
-    {
-      value: '3',
-      label: '资源化信息上报'
-    }
-  ]
-  const onChange = (value) => {
-    cosnole.log(value)
-  }
+  const { hideLeft, hideRight, pressLeft, pressRight, title, pickerData, pickerChange} = props
   return (
       <View style={styles.container}>
         {/* <StatusBar backgroundColor="#5ab0ff" barStyle="light-content" /> */}
@@ -37,11 +20,12 @@ const NavBar = (props) => {
           <Text style={[styles.tilte]}>{title}</Text>
         </View>
         <View style={styles.left}>
-          {hideRight ? null : (
+            {hideRight ? null : (
               <Picker
                 data={pickerData}
                 cols={1}
-                onChange={onChange}
+                onOk={pickerChange}
+                itemStyle={{marginBottom: 5, marginTop: 5}}
               >
                 <TouchableOpacity>
                   <View style={styles.left}>
@@ -60,11 +44,14 @@ NavBar.propTypes = {
   pressLeft: PropTypes.func,
   pressRight:  PropTypes.func,
   title: PropTypes.string,
+  pickerData: PropTypes.array,
+  pickerChange: PropTypes.func,
 }
 
 NavBar.defaultProps = {
   hideLeft: false,
-  hideRight: false
+  hideRight: false,
+  rightText: ''
 }
 const styles = StyleSheet.create({
   container: {
