@@ -83,6 +83,20 @@ export const signOrder = (id, data) => (
   })
 )
 
+export const resourceInfoSubmit = (id, data) => (
+  request({
+    url: '/orders/' + id + '/set_summary',
+    data,
+    method: 'post',
+  })
+)
+
+export const agreeTransport = (id) => (
+  request({
+    url: '/orders/' + id + '/approve',
+    method: 'post',
+  })
+)
 
 export const getUploadImage = async (params, url) => {
   const userInfo = JSON.parse(await AsyncStorage.getItem('userInfo'))

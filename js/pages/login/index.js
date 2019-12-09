@@ -20,9 +20,8 @@ const Login = (props) =>  {
       Toast.info('请输入密码')
       return;
     }
-    loginByUsername({username: 'dirver', password: '111111',}).then(res => {
-      console.log(res)
-      AsyncStorage.setItem('userInfo', JSON.stringify(res))
+    loginByUsername({username, password,}).then(res => {
+      AsyncStorage.setItem('userInfo', JSON.stringify(res.data))
       navigation.push('BottomNavigator')
     })
   }

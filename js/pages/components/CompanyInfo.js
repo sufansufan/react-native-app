@@ -24,9 +24,6 @@ const CompanyInfo = (props) => {
       label: ''
     }
   })
-  const onChange = (value) => {
-
-  }
   const changeCompany = (value) => {
     const data = handleCompanyData.length && handleCompanyData.filter(item => (item.value === value[0]))[0]
     AsyncStorage.setItem('CompanyInfo', JSON.stringify(data))
@@ -106,7 +103,7 @@ const CompanyInfo = (props) => {
     </>
   )
   const displayEditor = () => {
-    if(company.user_type === 'COMPANY') {
+    if(company.user_type === 'COMPANY' && type !== 'WAITING_DRIVER') {
       return (
         <>
           <View style={styles.content}>
@@ -192,7 +189,7 @@ const CompanyInfo = (props) => {
       return (
         displayEditor()
       )
-    }else if(edit === false && type === 'WAITING_DRIVER') {
+    }else if(edit === false && type === 'WAITING_DRIVER' && company.user_type !== 'PARK') {
       return (
         displayEditor()
       )

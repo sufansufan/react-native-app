@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, ScrollView, Image, StyleSheet, SafeAreaView } from 'react-native';
+import {View, Text, ScrollView, Image, StyleSheet, SafeAreaView  } from 'react-native';
 import NavBar from "../components/NavBar";
 import { List, Provider } from '@ant-design/react-native';
 import ListItem from './components/List'
@@ -34,12 +34,15 @@ export default class OrderManage extends Component {
             }
         }
     }
+
     static navigationOptions = {
         tabBarLabel: '联单管理',
         tabBarIcon: ({focused}) => (
             focused ? <Image style={styles.tabBarIcon} source={require('../../images/list_action.png')}/> :  <Image style={styles.tabBarIcon} source={require('../../images/list.png')}/>
         )
     };
+
+
     fetchOrderList(status) {
         var id = ''
         if(this.state.userInfo.company) {
@@ -108,7 +111,10 @@ export default class OrderManage extends Component {
                     break;
             }
         }).apply(this)
+        const { navigation } = this.props
+        console.log(navigation)
     }
+
     render() {
         return (
             <SafeAreaView style={{flex:1}}>

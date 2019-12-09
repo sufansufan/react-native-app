@@ -8,7 +8,7 @@ import ChangeInfo from '../components/ChangeInfo';
 import SceneImage from '../components/SceneImage'
 import SignInfo from '../components/SignInfo'
 import ResourceInfo from '../components/ResourceInfo'
-import { addOrder, getOrderDetails, submitDrivers, startDriver, finishDriver } from '../../utils/api/orderManage'
+import { addOrder, getOrderDetails, submitDrivers, startDriver, finishDriver, agreeTransport } from '../../utils/api/orderManage'
 import CancelBtn from './components/cancelBtn'
 
 
@@ -24,20 +24,6 @@ const Details = (props) => {
       setRightText(params.navRightText)
     }
   }, [])
-  const pickerData = [
-    {
-      value: '1',
-      label: '分配司机'
-    },
-    {
-      value: '2',
-      label: '签收'
-    },
-    {
-      value: '3',
-      label: '资源化信息上报'
-    }
-  ]
   const pressLeft = () => {
     navigation.pop()
   }
@@ -48,20 +34,23 @@ const Details = (props) => {
       setCompany({...company, user_type})
       if(!params.edit) {
         getOrderDetails(params.id).then((res) => {
-          console.log(res)
-          const {disposal_company_name, images, solid_waste:{items}, actions, company, driver_name, car_code, install_images, uninstall_images} = res
+          const {disposal_company_name, images, solid_waste:{items}, actions, company, driver_name, car_code, install_images, uninstall_images, quantity_burning, quantity_landfill, quantity_recyclable, review_status} = res
           setDetailsInfo(
             {
               companyInfo: {
                 disposal_company_name,
                 driver_name,
-                car_code
+                car_code,
+                quantity_burning,
+                quantity_landfill,
+                quantity_recyclable
               },
               wasteInfo: items,
               imageInfo: images,
               actions,
               install_images,
-              uninstall_images
+              uninstall_images,
+              review_status
             }
           )
           setCompany({...company, user_type})
@@ -75,17 +64,23 @@ const Details = (props) => {
   const submit = (params) => {
     if(params.edit) {
       addSubmit()
-    }else if(params.type === 'WAITING_DRIVER') {
+    }else if(params.type === 'WAITING_DRIVER' && userType !== 'PARK') {
       driversubmit(params.id)
     }else if(params.type === 'CLEAN_REMOVE') {
       startDriver(params.id).then(res => {
         Toast.success('开始清运')
-        navigation.pop()
+        navigation.goBack()
       })
     }else if(params.type === 'START_REMOVE') {
       finishDriver(params.id).then(res => {
         Toast.success('结束清运')
-        navigation.pop()
+        navigation.goBack()
+      })
+    }else if(userType === 'PARK') {
+      agreeTransport(params.id).then(res => {
+        Toast.success('提交成功')
+        navigation.navigate({routeName: 'BottomNavigator', state: {key: 'Order', routeName: 'Order'}})
+        // navigation.goBack()
       })
     }
   }
@@ -112,6 +107,7 @@ const Details = (props) => {
       }else {
         Toast.success('新增成功')
       }
+      navigation.goBack()
       AsyncStorage.multiRemove(['CompanyInfo', 'wasteInfo', 'imageList'])
     })
   }
@@ -132,70 +128,94 @@ const Details = (props) => {
     })
   }
   const displaySignResource = (userType, paramsType) => {
-    if(userType === 'COMPANY'){
+    if(userType === 'COMPANY' && !params.edit) {
+      if(paramsType === 'END_REMOVE') {
+        return (
+          <>
+            <SignInfo {...props} id={params.id}/>
+          </>
+        )
+      }
+      if(paramsType === 'FINISH') {
+        return (
+          <ResourceInfo  {...props} id={params.id} companyInfo={detailsInfo.companyInfo}/>
+        )
+      }
+      if(paramsType === 'WAITING_DRIVER') {
+        return null
+      }
+    }else if (userType === 'DISPOSAL') {
+      return null
+    }else {
       return (
         <SceneImage {...props} edit={params.edit}  imageInfo={detailsInfo.imageInfo}/>
       )
-    }else if (paramsType === 'WAITING_DRIVER') {
-      return null
-    }else if (paramsType === 'CLEAN_REMOVE') {
-      return (
-        <>
-          <SceneImage {...props} edit={params.edit}  imageInfo={detailsInfo.imageInfo}/>
-          <SceneImage {...props} edit={true} title='装运现场照片'  imageInfo={detailsInfo.install_images} id={params.id}/>
-        </>
-      )
-    }else if(paramsType === 'START_REMOVE'){
-      return (
-        <>
-          <SceneImage {...props} edit={params.edit}  imageInfo={detailsInfo.imageInfo}/>
-          <SceneImage {...props} edit={false} title='装运现场照片'  imageInfo={detailsInfo.install_images} id={params.id}/>
-          <SceneImage {...props} edit={true} title='卸货现场图片'  imageInfo={detailsInfo.uninstall_images} id={params.id}/>
-        </>
-      )
-    }else if(paramsType === 'END_REMOVE') {
-      return (
-        <>
-          <SignInfo {...props} id={params.id}/>
-        </>
-      )
-    }else {
-      return (
-        <>
-          <SignInfo {...props} />
-          <ResourceInfo  {...props}/>
-        </>
-      )
     }
+    if(userType === 'DRIVER') {
+      if(paramsType === 'CLEAN_REMOVE') {
+        return (
+          <>
+            <SceneImage {...props} edit={params.edit}  imageInfo={detailsInfo.imageInfo}/>
+            <SceneImage {...props} edit={true} title='装运现场照片'  imageInfo={detailsInfo.install_images} id={params.id}/>
+          </>
+        )
+      }
+      if(paramsType === 'START_REMOVE') {
+        return (
+          <>
+            <SceneImage {...props} edit={params.edit}  imageInfo={detailsInfo.imageInfo}/>
+            <SceneImage {...props} edit={false} title='装运现场照片'  imageInfo={detailsInfo.install_images} id={params.id}/>
+            <SceneImage {...props} edit={true} title='卸货现场图片'  imageInfo={detailsInfo.uninstall_images} id={params.id}/>
+          </>
+        )
+      }
+    }
+    // else {
+    //   return (
+    //     <>
+    //       <SignInfo {...props} />
+    //     </>
+    //   )
+    // }
   }
   const displayBtn = (params) => {
-    if(params.edit || params.type === 'WAITING_DRIVER') {
+    if(params.edit || userType === 'COMPANY' && params.type === 'WAITING_DRIVER' || userType === 'DISPOSAL' && params.type === 'WAITING_DRIVER') {
       return (
         <View style={styles.button} >
           <Button type='primary' onPress={submit.bind(this, params)}>提交</Button>
         </View>
       )
-    }else if(params.type === 'CLEAN_REMOVE') {
+    }
+    if(userType === 'DRIVER'){
+      if(params.type === 'CLEAN_REMOVE') {
+        return (
+          <View style={styles.button} >
+            <Button type='primary' onPress={submit.bind(this, params)}>开始清运</Button>
+          </View>
+        )
+      }
+      if(params.type === 'START_REMOVE') {
+        return (
+          <View style={styles.button} >
+            <Button type='primary' onPress={submit.bind(this, params)}>结束清运</Button>
+          </View>
+        )
+      }
+    }
+    if(userType === 'PARK' && detailsInfo.review_status === '未审核') {
       return (
         <View style={styles.button} >
-          <Button type='primary' onPress={submit.bind(this, params)}>开始清运</Button>
-        </View>
-      )
-    }else if(params.type === 'START_REMOVE') {
-      return (
-        <View style={styles.button} >
-          <Button type='primary' onPress={submit.bind(this, params)}>结束清运</Button>
+          <Button type='primary' onPress={submit.bind(this, params)}>同意清运</Button>
         </View>
       )
     }
-
   }
   return (
       <Provider style={{height: '100%'}}>
         <SafeAreaView style={{flex: 1}}>
           <KeyboardAvoidingView behavior='height' contentContainerStyle={styles.contentContainer}>
             <View style={{height: 20}}>
-              <NavBar {...props} title='联单管理' pressLeft={pressLeft} pickerData={pickerData} hideRight={true} rightText={rightText} ></NavBar>
+              <NavBar {...props} title='联单管理' pressLeft={pressLeft} hideRight={true} rightText={rightText} ></NavBar>
             </View>
             <View style={styles.scrollContainer}>
               <ScrollView
@@ -209,7 +229,7 @@ const Details = (props) => {
                   {displaySignResource(userType, params.type)}
                 </View>
                   {displayBtn(params)}
-                {detailsInfo.actions && detailsInfo.actions.can_cancel ? <CancelBtn id={params.id} {...props}/> : null}
+                { params.type !== 'WAITING_DRIVER' && detailsInfo.actions && detailsInfo.actions.can_cancel ? <CancelBtn id={params.id} {...props}/> : null}
               </ScrollView>
             </View>
           </KeyboardAvoidingView>

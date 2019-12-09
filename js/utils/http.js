@@ -13,6 +13,7 @@ const axiosInstance = axios.create({
   maxContentLength: 2000
 });
 axiosInstance.interceptors.request.use(async (config) => {
+
   config.headers['Content-Type'] =  'application/json'
   const userInfo = JSON.parse(await AsyncStorage.getItem('userInfo'))
   if(userInfo && userInfo.authtoken) {

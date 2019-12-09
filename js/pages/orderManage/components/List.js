@@ -9,15 +9,17 @@ const ListItem = (props) => {
     const { status, id } = item
     console.log(status)
     if(status === '等待分配司机') {
-      navigation.navigate({routeName: 'OrderDetails', params: {id, edit: false, type: 'WAITING_DRIVER' }})
+      navigation.replace({routeName: 'OrderDetails', params: {id, edit: false, type: 'WAITING_DRIVER' }})
     }else if(status === '已经分配司机等待清运') {
-      navigation.navigate({routeName: 'OrderDetails', params: {id, edit: false, type: 'CLEAN_REMOVE' }})
+      navigation.replace({routeName: 'OrderDetails', params: {id, edit: false, type: 'CLEAN_REMOVE' }})
     }else if(status === '开始清运'){
-      navigation.navigate({routeName: 'OrderDetails', params: {id, edit: false, type: 'START_REMOVE' }})
+      navigation.replace({routeName: 'OrderDetails', params: {id, edit: false, type: 'START_REMOVE' }})
     }else if(status === '结束清运'){
-      navigation.navigate({routeName: 'OrderDetails', params: {id, edit: false, type: 'END_REMOVE' }})
+      navigation.replace({routeName: 'OrderDetails', params: {id, edit: false, type: 'END_REMOVE' }})
+    }else if(status === '已完成'){
+      navigation.replace({routeName: 'OrderDetails', params: {id, edit: false, type: 'FINISH' }})
     }else {
-      navigation.navigate({routeName: 'OrderDetails', params: {id}})
+      navigation.replace({routeName: 'OrderDetails', params: {id}})
     }
   }
   return (
