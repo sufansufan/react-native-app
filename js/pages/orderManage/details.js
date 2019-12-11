@@ -69,12 +69,12 @@ const Details = (props) => {
     }else if(params.type === 'CLEAN_REMOVE') {
       startDriver(params.id).then(res => {
         Toast.success('开始清运')
-        navigation.goBack()
+        navigation.pop()
       })
     }else if(params.type === 'START_REMOVE') {
       finishDriver(params.id).then(res => {
         Toast.success('结束清运')
-        navigation.goBack()
+        navigation.pop()
       })
     }else if(userType === 'PARK') {
       agreeTransport(params.id).then(res => {
@@ -89,6 +89,10 @@ const Details = (props) => {
     const companyInfo =JSON.parse(await AsyncStorage.getItem('CompanyInfo'))
     const wasteInfo = JSON.parse(await AsyncStorage.getItem('wasteInfo'))
     const imageList = JSON.parse(await AsyncStorage.getItem('imageList'))
+    if(!imageList) {
+      Toast.info('请添加图片', 5)
+      return
+    }
     let ids = []
     imageList.length && imageList.forEach(item => {
       ids.push(item.id)
@@ -105,24 +109,24 @@ const Details = (props) => {
       if(res.msg) {
         Toast.info(res.msg)
       }else {
-        Toast.success('新增成功')
+        Toast.success('新增成功', 5)
       }
-      navigation.goBack()
+      navigation.pop()
       AsyncStorage.multiRemove(['CompanyInfo', 'wasteInfo', 'imageList'])
     })
   }
   const driversubmit = async(id) => {
     const {drivers, cars} =JSON.parse(await AsyncStorage.getItem('distributeDrivers'))
     if(!drivers.value) {
-      Toast.info('请选择司机')
+      Toast.info('请选择司机', 5)
       return
     }
     if(!cars.value) {
-      Toast.info('请选择车牌')
+      Toast.info('请选择车牌', 5)
       return
     }
     submitDrivers(id, {driver_id: drivers.value, car_id: cars.value}).then(res => {
-      Toast.success('提交成功')
+      Toast.success('提交成功',5)
       navigation.pop()
       AsyncStorage.multiRemove(['distributeDrivers'])
     })
@@ -179,6 +183,9 @@ const Details = (props) => {
     // }
   }
   const displayBtn = (params) => {
+    if(userType === 'COMPANY' && params.type === 'WAITING_DRIVER'){
+      return null
+    }
     if(params.edit || userType === 'COMPANY' && params.type === 'WAITING_DRIVER' || userType === 'DISPOSAL' && params.type === 'WAITING_DRIVER') {
       return (
         <View style={styles.button} >

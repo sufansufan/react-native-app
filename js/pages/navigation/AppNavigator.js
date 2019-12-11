@@ -10,6 +10,7 @@ import OrderDetails from '../orderManage/details'
 import AddWaste from '../orderManage/addWaste'
 import MessageDetails  from '../indexPage/details'
 
+
 const BottomNavigator =  createMaterialBottomTabNavigator({
   Index: {screen: IndexPage},
   Order: { screen: OrderManage },
@@ -22,6 +23,7 @@ const BottomNavigator =  createMaterialBottomTabNavigator({
     borderTopWidth: 0.5,
   }
 })
+
 export default createAppContainer(
   createStackNavigator({
     Login: {
@@ -40,7 +42,7 @@ export default createAppContainer(
       screen: MessageDetails
     }
   },{
-    initialRouteName: 'Login',
+    initialRouteName: 'BottomNavigator',
     headerMode: 'none',
     mode: 'card',
   })

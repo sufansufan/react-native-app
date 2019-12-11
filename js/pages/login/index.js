@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Text, View, StyleSheet, TextInput } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage';
 import { Button, Toast, Provider  } from '@ant-design/react-native';
@@ -21,8 +21,12 @@ const Login = (props) =>  {
       return;
     }
     loginByUsername({username, password,}).then(res => {
-      AsyncStorage.setItem('userInfo', JSON.stringify(res.data))
-      navigation.push('BottomNavigator')
+      if(res.data.error_code === 9999) {
+        Toast.fail(res.data.msg, 5)
+      }else {
+        AsyncStorage.setItem('userInfo', JSON.stringify(res.data))
+        navigation.replace('BottomNavigator')
+      }
     })
   }
   return (

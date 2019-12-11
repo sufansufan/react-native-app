@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import { View, Text, Image, StyleSheet, SafeAreaView} from 'react-native';
-import { List } from '@ant-design/react-native';
+import { View, Text, Image, StyleSheet, SafeAreaView, TouchableOpacity} from 'react-native';
+import { List, Modal, Provider  } from '@ant-design/react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import NavBar from "../components/NavBar";
 const Item = List.Item;
@@ -27,36 +27,55 @@ export default class MyPage extends Component {
       userInfo: info
     })
   }
+  onButtonClick = () => {
+    Modal.alert('', '是否退出！', [
+      {
+        text: '取消',
+        onPress: () => console.log('cancel'),
+        style: 'cancel',
+      },
+      { text: '确定', onPress: () => {
+        const {navigation} = this.props
+        AsyncStorage.multiRemove(['userInfo'])
+        navigation.replace('Login')
+      } },
+    ]);
+  }
   render() {
     const { userInfo } = this.state
     return (
-      <SafeAreaView style={{ flex: 1}}>
-        <View style={styles.container}>
-          <NavBar {...this.props} hideLeft={true} hideRight={true} title='个人中心'></NavBar>
-          <View style={styles.titleBox}>
-            <View style={styles.titleImage}>
-              <Image  style={{width: '100%', height: '100%'}} source={{uri: url}}></Image>
+      <Provider>
+        <SafeAreaView style={{ flex: 1}}>
+          <View style={styles.container}>
+            <NavBar {...this.props} hideLeft={true} hideRight={true} title='个人中心'></NavBar>
+            <View style={styles.titleBox}>
+              <View style={styles.titleImage}>
+                <Image  style={{width: '100%', height: '100%'}} source={{uri: url}}></Image>
+              </View>
+              <View style={{ height: 80, justifyContent: 'center'}}>
+                <Text style={styles.titleText}>用户名：{userInfo.name}</Text>
+                <Text style={styles.titleText}>联系电话：1387814123</Text>
+              </View>
             </View>
-            <View style={{ height: 80, justifyContent: 'center'}}>
-              <Text style={styles.titleText}>用户名：{userInfo.name}</Text>
-              <Text style={styles.titleText}>联系电话：1387814123</Text>
+            <View>
+              <List>
+                <Item wrap multipleLine onPress={() => {}}>
+                  版本号
+                </Item>
+                <Item wrap multipleLine onPress={() => {}}>
+                  清楚缓存
+                </Item>
+                <Item wrap multipleLine >
+
+                  <TouchableOpacity onPress={this.onButtonClick}>
+                    <Text style={{fontSize: 16}}>退出登录</Text>
+                  </TouchableOpacity>
+                </Item>
+              </List>
             </View>
           </View>
-          <View>
-            <List>
-              <Item wrap multipleLine onPress={() => {}}>
-                版本号
-              </Item>
-              <Item wrap multipleLine onPress={() => {}}>
-                清楚缓存
-              </Item>
-              <Item wrap multipleLine onPress={() => {}}>
-                退出登录
-              </Item>
-            </List>
-          </View>
-        </View>
-      </SafeAreaView>
+        </SafeAreaView>
+      </Provider>
     );
   }
 }

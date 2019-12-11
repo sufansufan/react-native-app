@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { Icon } from '@ant-design/react-native';
+import { Icon, Toast } from '@ant-design/react-native';
 import ImagePicker from 'react-native-image-picker';
 import TitleInfo from './TitleInfo'
 import PropTypes from 'prop-types'
@@ -70,8 +70,12 @@ const SceneImage = (props) => {
           })
         }else {
           getUploadImage(params, '/orders/upload').then( async ({data}) => {
-            await setImageList([...imageList, data])
-            AsyncStorage.setItem('imageList', JSON.stringify([...imageList, data]))
+            if(data.error_code) {
+              Toast.info(data.msg, 5)
+            }else {
+              await setImageList([...imageList, data])
+              AsyncStorage.setItem('imageList', JSON.stringify([...imageList, data]))
+            }
           })
         }
       }

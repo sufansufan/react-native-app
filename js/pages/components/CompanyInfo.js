@@ -128,6 +128,10 @@ const CompanyInfo = (props) => {
           </View>
         </>
       )
+    }else if( company.user_type === 'COMPANY' && type === 'WAITING_DRIVER') {
+      return (
+        noEditor
+      )
     }else if(type === 'WAITING_DRIVER') {
       return (
         <View>

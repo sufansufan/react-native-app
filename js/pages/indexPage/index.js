@@ -17,6 +17,10 @@ export default class IndexPage extends Component {
   };
   async componentDidMount() {
     let value = await AsyncStorage.getItem('userInfo')
+    const { navigation } = this.props
+    if(!value) {
+      navigation.replace('Login')
+    }
   }
   render() {
     return (

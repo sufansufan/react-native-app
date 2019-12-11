@@ -14,19 +14,35 @@ export default class OrderManage extends Component {
             pickerData: [],
             userType: '',
             userInfo: {},
-            orderList: []
+            orderList: [],
+            pickerValue: '',
+            page: 1,
+            pageCount: null,
+            showFoot: 0,
+            isLoading: true,
+            isRefreshing: false
         }
         this.pickerChange = (value) => {
             const { navigation } = this.props
             const {userType} = this.state
+            this.setState({
+                pickerValue: value[0],
+            })
             if(userType==='COMPANY') {
                 if(value[0]==='add'){
                     navigation.navigate({routeName: 'OrderDetails', params: {userType, edit: true,}})
                 }else {
-                    this.fetchOrderList(value[0])
+                    this.setState({
+                        orderList: []
+                    })
+                    this.fetchOrderList(value[0], '' , '0')
+
                 }
             }else if(userType==='DISPOSAL') {
-                this.fetchOrderList(value[0])
+                this.setState({
+                    orderList: []
+                })
+                this.fetchOrderList(value[0], '', '0')
 
                 // if(value[0]==='WAITING_DRIVER'){
                 //     navigation.navigate({routeName: 'OrderDetails', params: {userType, edit: true, type: 'WAITING_DRIVER'}})
@@ -42,27 +58,63 @@ export default class OrderManage extends Component {
         )
     };
 
-
-    fetchOrderList(status) {
+    fetchOrderList(status, type, page) {
         var id = ''
         if(this.state.userInfo.company) {
             id = this.state.userInfo.company.id
         }
         const params = {
-            page: 1,
+            page: this.state.page,
             company_id: id || '',
             status,
         }
-        getOrderList(params).then(({orders}) => {
-            console.log(orders)
+        if(type === 'down') {
+            params.page = 0
             this.setState({
-                orderList: orders
+                page: 1
+            })
+        }
+        if(page) {
+            params.page = 1
+        }
+        getOrderList(params).then((res) => {
+            let {orders, total_count} = res
+            let pageCount = Math.floor(total_count/20) + 1
+            this.setState({
+                pageCount,
+                page: this.state.page += 1,
+                showFoot: 0,
+            })
+
+            const { orderList } = this.state
+            this.setState({
+                orderList: [...orderList,...orders]
             })
         })
     }
+    getOrderListFromList(type) {
+        if(type === 'down') {
+            this.setState({
+                isRefreshing: false,
+                orderList: []
+            })
+            this.fetchOrderList(this.state.pickerValue || 'ALL' , 'down')
+        }else {
+            const { pageCount, page } = this.state
+            if(page <= pageCount) {
+                this.setState({
+                    showFoot: 2
+                })
+                this.fetchOrderList(this.state.pickerValue || 'ALL')
+            }else {
+                this.setState({
+                    showFoot: 1
+                })
+            }
+        }
+    }
     componentDidMount() {
         (async function () {
-            console.log(JSON.parse(await AsyncStorage.getItem('userInfo')), 999999)
             let userInfo = JSON.parse(await AsyncStorage.getItem('userInfo'))
             const { user_type } = userInfo
             this.setState({
@@ -111,8 +163,6 @@ export default class OrderManage extends Component {
                     break;
             }
         }).apply(this)
-        const { navigation } = this.props
-        console.log(navigation)
     }
 
     render() {
@@ -122,14 +172,7 @@ export default class OrderManage extends Component {
                     <Provider>
                         <NavBar {...this.props} hideLeft={true} title='联单管理' pickerData={this.state.pickerData} pickerChange={this.pickerChange} hideRight={this.state.userType ==='DRIVER' ? true : false}></NavBar>
                         <View style={styles.scrollContainer}>
-                            <ScrollView
-                                automaticallyAdjustContentInsets={false}
-                                showsHorizontalScrollIndicator={false}
-                                showsVerticalScrollIndicator={false}
-                            >
-
-                                <ListItem {...this.props} orderList={this.state.orderList}></ListItem>
-                            </ScrollView>
+                            <ListItem {...this.props} orderList={this.state.orderList} getOrderListFromList={this.getOrderListFromList.bind(this)} showFoot={this.state.showFoot} isRefreshing={this.state.isRefreshing}></ListItem>
                         </View>
                     </Provider>
                 </View>
