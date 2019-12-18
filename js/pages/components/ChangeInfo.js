@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   listBox: {
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#fafafb',
   },
   listContent: {
     flexDirection: 'row',

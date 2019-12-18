@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     height: 50,
     backgroundColor: "#fff",
     borderBottomWidth: 1,
-    borderBottomColor: '#f9f9f9',
+    borderBottomColor: '#ddd',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

@@ -54,7 +54,7 @@ export default class OrderManage extends Component {
     static navigationOptions = {
         tabBarLabel: '联单管理',
         tabBarIcon: ({focused}) => (
-            focused ? <Image style={styles.tabBarIcon} source={require('../../images/list_action.png')}/> :  <Image style={styles.tabBarIcon} source={require('../../images/list.png')}/>
+            focused ? <Image style={styles.tabBarIcon} resizeMode={'cover'} source={require('../../images/list_action.png')}/> :  <Image style={styles.tabBarIcon} source={require('../../images/list.png')}/>
         )
     };
 
@@ -186,8 +186,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   tabBarIcon: {
-    width: 21,
-    height: 21,
+    width: 40,
+    height: 22,
   },
   scrollContainer: {
     height: '93%',

@@ -27,7 +27,7 @@ const ListItem = (props) => {
       <TouchableOpacity onPress={goToDetails.bind(this, item)} activeOpacity={0.6} key={item + new Date().getTime()}>
         <View style={styles.listBox}>
           <Text style={{ width: '75%'}}>
-            <Text>{item.company.name}-预计清运时间{item.created_at}</Text>
+            <Text style={{fontSize: 18}}>{item.company.name}-预计清运时间{item.created_at}</Text>
           </Text>
           <View style={{width: '20%', alignItems: 'flex-end',}}>
             <Icon name='right'></Icon>

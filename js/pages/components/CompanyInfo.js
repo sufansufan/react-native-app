@@ -206,7 +206,6 @@ const CompanyInfo = (props) => {
   return (
     <View>
       <TitleInfo title='产废单位信息'/>
-      <List>
         <View style={styles.content}>
           <Text style={styles.font}>企业名称</Text>
           <TextInput
@@ -253,7 +252,6 @@ const CompanyInfo = (props) => {
           />
         </View>
         { displayCompany() }
-      </List>
     </View>
   );
 }

@@ -1,174 +1,41 @@
 import React from 'react';
-import { ScrollView, Text, View } from 'react-native';
-import {
-  Button,
-  Modal,
-  WhiteSpace,
-  WingBlank,
-  Toast,
-  Provider,
-} from '@ant-design/react-native';
-export class BasicModalExample extends React.Component {
+import { View, Text } from 'react-native';
+import ScrollableTabView,{ DefaultTabBar, ScrollableTabBar } from 'react-native-scrollable-tab-view';
+export default class BasicModalExample extends React.Component {
   constructor(props) {
     super(props);
-    this.onClose = () => {
-      this.setState({
-        visible: false,
-      });
-    };
-    this.onClose1 = () => {
-      this.setState({
-        visible1: false,
-      });
-    };
-    this.onClose2 = () => {
-      this.setState({
-        visible2: false,
-      });
-    };
-    this.onButtonClick = () => {
-      Modal.alert('Title', 'alert content', [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('cancel'),
-          style: 'cancel',
-        },
-        { text: 'OK', onPress: () => console.log('ok') },
-      ]);
-    };
-    this.onButtonClick2 = () => {
-      Modal.operation([
-        { text: '标为未读', onPress: () => console.log('标为未读被点击了') },
-        { text: '置顶聊天', onPress: () => console.log('置顶聊天被点击了') },
-      ]);
-    };
-    this.onButtonClick3 = () => {
-      Modal.prompt(
-        'Login',
-        'Pleas input login information',
-        (login, password) =>
-          console.log(`login: ${login}, password: ${password}`),
-        'login-password',
-        null,
-        ['Please input name', 'Please input password']
-      );
-    };
-    this.onButtonClick4 = () => {
-      Modal.prompt(
-        'Input password',
-        'password message',
-        password => console.log(`password: ${password}`),
-        'secure-text',
-        'defaultValue'
-      );
-    };
-    this.onButtonClick5 = () => {
-      Modal.prompt(
-        'Name',
-        'name message',
-        password => console.log(`password: ${password}`),
-        'default',
-        null,
-        ['please input name']
-      );
-    };
     this.state = {
-      visible: false,
-      visible1: false,
-      visible2: false,
+      selectedIndex: 0,
     };
   }
   render() {
-    const footerButtons = [
-      { text: 'Cancel', onPress: () => console.log('cancel') },
-      { text: 'Ok', onPress: () => console.log('ok') },
-    ];
     return (
-      <ScrollView style={{ marginTop: 20 }}>
-        <WingBlank>
-          <Button onPress={() => this.setState({ visible: true })}>
-            showModal
-          </Button>
-          <WhiteSpace />
-          <Button onPress={() => this.setState({ visible1: true })}>
-            transparent:false
-          </Button>
-          <WhiteSpace />
-          <Button onPress={() => this.setState({ visible2: true })}>
-            popup
-          </Button>
-          <WhiteSpace />
-          <Button onPress={this.onButtonClick}>Modal.alert</Button>
-          <WhiteSpace />
-          <Button onPress={this.onButtonClick2}>Modal.opertation</Button>
-          <WhiteSpace />
-          <Button onPress={this.onButtonClick5}>Modal.prompt (default)</Button>
-          <WhiteSpace />
-          <Button onPress={this.onButtonClick3}>
-            Modal.prompt (login-password)
-          </Button>
-          <WhiteSpace />
-          <Button onPress={this.onButtonClick4}>
-            Modal.prompt (secure-text)
-          </Button>
-        </WingBlank>
-        <Modal
-          title="Title"
-          transparent
-          onClose={this.onClose}
-          maskClosable
-          visible={this.state.visible}
-          closable
-          footer={footerButtons}
-        >
-          <View style={{ paddingVertical: 20 }}>
-            <Text style={{ textAlign: 'center' }}>Content...</Text>
-            <Text style={{ textAlign: 'center' }}>Content...</Text>
-          </View>
-          <Button type="primary" onPress={this.onClose}>
-            close modal
-          </Button>
-        </Modal>
-        <Modal
-          transparent={false}
-          visible={this.state.visible1}
-          animationType="slide-up"
-          onClose={this.onClose1}
-        >
-          <View style={{ paddingVertical: 220 }}>
-            <Text style={{ textAlign: 'center' }}>Content...</Text>
-            <Text style={{ textAlign: 'center' }}>Content...</Text>
-          </View>
-          <Button
-            type="primary"
-            onPress={() => Toast.info('Hello Toast in Modal now works')}
-          >
-            Hello Toast in Modal now works
-          </Button>
-          <Button type="primary" onPress={this.onClose1}>
-            close modal
-          </Button>
-        </Modal>
-        <Modal
-          popup
-          visible={this.state.visible2}
-          animationType="slide-up"
-          onClose={this.onClose2}
-        >
-          <View style={{ paddingVertical: 20, paddingHorizontal: 20 }}>
-            <Text style={{ textAlign: 'center' }}>Content...</Text>
-            <Text style={{ textAlign: 'center' }}>Content...</Text>
-          </View>
-          <Button type="primary" onPress={this.onClose2}>
-            close modal
-          </Button>
-        </Modal>
-      </ScrollView>
-    );
+      <ScrollableTabView
+      style={{width: '100%',}}
+      tabBarPosition='top'//tabBarPosition默认top  位于屏幕顶部   bottom位于屏幕底部  overlayTop悬浮在顶部
+      initialPage={0} //初始化时被选中的Tab下标，默认是0
+      locked={false}//表示手指是否能拖动视图  默认false  true则不能拖动,只可点击
+      renderTabBar={() => <ScrollableTabBar />}
+      tabBarUnderlineStyle={{backgroundColor: ''}}//设置DefaultTabBar和ScrollableTabBarTab选中时下方横线的颜色
+      tabBarBackgroundColor='#FFFFFF'//设置整个Tab这一栏的背景颜色
+      tabBarActiveTextColor='#1C8BC1'//设置选中Tab的文字颜色
+      tabBarInactiveTextColor='#7A67EE'//设置未选中Tab的文字颜色
+      tabBarTextStyle={{fontSize: 18}}//设置Tab文字的样式
+      onChangeTab={(obj) => {//Tab切换之后会触发此方法
+        console.log('index:' + obj.i);
+      }}
+      onScroll={(postion) => {  //视图正在滑动的时候触发此方法
+        // float类型 [0, tab数量-1]
+        console.log('scroll position:' + postion);
+      }}
+  >
+      <View tabLabel='Tab1'>
+          <Text>Tab1</Text>
+      </View>
+      <View tabLabel='Tab2'>
+          <Text>Tab2</Text>
+      </View>
+  </ScrollableTabView>
+    )
   }
 }
-export default () => (
-  <Provider>
-    <BasicModalExample />
-  </Provider>
-);

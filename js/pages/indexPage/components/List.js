@@ -5,7 +5,6 @@ import { getSystemNotice } from '../../../utils/api/home'
 const Item = List.Item;
 const ListItem = (props) => {
   const { navigation } = props
-  console.log(navigation)
   const [systemNotice, setSystemNotice] = useState([])
   const getList = () => {
     getSystemNotice({page: 1}).then(({notices}) => {
@@ -28,12 +27,12 @@ const ListItem = (props) => {
     >
       {systemNotice.length ? systemNotice.map(item => (
         <TouchableOpacity onPress={goToDetails.bind(this)}  key={item.id + new Date().getTime()} >
-          <View style={{paddingLeft: 20, paddingRight: 20, borderWidth: 0.5, borderColor: '#ddd'}}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent:"space-between", height: 60 }}>
-              <Text style={{ width: '70%'}}>
-                {item.content}
+          <View style={{paddingLeft: 20, paddingRight: 20, borderBottomWidth: 0.5, borderColor: '#ddd'}}>
+            <View style={{ height: 60, justifyContent:'center' }}>
+              <Text style={{ width: '100%', fontSize: 18}}>
+                {item.title}
               </Text>
-              <Text style={{ width: '30%', textAlign: 'right'}}>
+              <Text style={{ width: '100%', fontSize: 16, color: '#999', marginTop: 2}}>
                 { item.created_at }
               </Text>
             </View>

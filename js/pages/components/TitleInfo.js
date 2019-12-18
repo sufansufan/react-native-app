@@ -6,7 +6,7 @@ const TitleInfo = (props) => {
   const { title } = props
   return (
     <View style={styles.title}>
-      <Text style={{fontSize: 18}}>{title}</Text>
+      <Text style={{fontSize: 16, color: '#999999'}}>{title}</Text>
     </View>
   );
 }
@@ -16,10 +16,10 @@ TitleInfo.propTypes = {
 }
 const styles = StyleSheet.create({
   title: {
-    height: 50,
-    backgroundColor: '#f9f9f9',
+    height: 44,
+    backgroundColor: '#FAFAFB',
     justifyContent: 'center',
-    paddingLeft: 10,
+    paddingLeft: 15,
   }
 });
 

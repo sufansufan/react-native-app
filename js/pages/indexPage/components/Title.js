@@ -5,14 +5,14 @@ const url = 'https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/crop%3D
 const Title = () => {
   return (
     <View style={styles.titleBox}>
-      <View style={styles.titleLeft}>
+      {/* <View style={styles.titleLeft}>
         <View style={styles.titleLeftTop}>
           <Image  style={{width: '100%', height: '100%'}} source={{uri: url}}></Image>
         </View>
         <View style={styles.titleLeftBottom}>
         <Image  style={{width: '100%', height: '100%'}} source={{uri: url}}></Image>
         </View>
-      </View>
+      </View> */}
       <View style={styles.titleRight}>
       <Image  style={{width: '100%', height: '100%'}} source={{uri: url}}></Image>
       </View>

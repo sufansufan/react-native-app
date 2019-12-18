@@ -11,7 +11,7 @@ export default class MyPage extends Component {
   static navigationOptions = {
     tabBarLabel: '我的',
     tabBarIcon: ({focused}) => (
-      focused ? <Image style={styles.tabBarIcon} source={require('../../images/my_action.png')}/> :  <Image style={styles.tabBarIcon} source={require('../../images/my.png')}/>
+      focused ? <Image style={styles.tabBarIcon}  source={require('../../images/my_action.png')}/> :  <Image style={styles.tabBarIcon} source={require('../../images/my.png')}/>
     ),
   };
   constructor(props) {
@@ -50,15 +50,49 @@ export default class MyPage extends Component {
             <NavBar {...this.props} hideLeft={true} hideRight={true} title='个人中心'></NavBar>
             <View style={styles.titleBox}>
               <View style={styles.titleImage}>
-                <Image  style={{width: '100%', height: '100%'}} source={{uri: url}}></Image>
+                <Image  style={{width: '100%', height: '100%', borderRadius: 5}} source={{uri: url}}></Image>
               </View>
-              <View style={{ height: 80, justifyContent: 'center'}}>
+              <View style={{ height: 60, justifyContent: 'center'}}>
                 <Text style={styles.titleText}>用户名：{userInfo.name}</Text>
-                <Text style={styles.titleText}>联系电话：1387814123</Text>
+                <Text style={styles.phone}>联系电话：1387814123</Text>
               </View>
             </View>
-            <View>
-              <List>
+            <View style={{marginTop: 10, backgroundColor: '#fff'}}>
+              <TouchableOpacity>
+                <View style={styles.box}>
+                  <View style={styles.images}>
+                    <Image resizeMode={'contain'} style={{width: 20, height:20}} source={require('../../images/banben.png')}></Image>
+                  </View>
+                  <View style={styles.boxContent}>
+                    <Text style={{fontSize: 20}}>版本号</Text>
+                    <Text style={{fontSize: 20, color: '#999'}}>1.0.0</Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <View style={styles.box}>
+                  <View style={styles.images}>
+                    <Image resizeMode={'contain'} style={{width: 20, height:20}} source={require('../../images/shuazi.png')}></Image>
+                  </View>
+                  <View style={styles.boxContent}>
+                    <Text style={{fontSize: 20}}>清除缓存</Text>
+                    {/* <Text style={{fontSize: 20, color: '#999'}}>1.0.0</Text> */}
+                  </View>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={this.onButtonClick}>
+                <View style={styles.box}>
+                  <View style={styles.images}>
+                    <Image resizeMode={'contain'} style={{width: 20, height:20}} source={require('../../images/exit.png')}></Image>
+                  </View>
+                  <View style={styles.boxContent}>
+                    <Text style={{fontSize: 20}}>退出登录</Text>
+                    {/* <Text style={{fontSize: 20, color: '#999'}}>1.0.0</Text> */}
+                  </View>
+                </View>
+              </TouchableOpacity>
+
+              {/* <List>
                 <Item wrap multipleLine onPress={() => {}}>
                   版本号
                 </Item>
@@ -66,12 +100,11 @@ export default class MyPage extends Component {
                   清楚缓存
                 </Item>
                 <Item wrap multipleLine >
-
                   <TouchableOpacity onPress={this.onButtonClick}>
                     <Text style={{fontSize: 16}}>退出登录</Text>
                   </TouchableOpacity>
                 </Item>
-              </List>
+              </List> */}
             </View>
           </View>
         </SafeAreaView>
@@ -83,25 +116,52 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#fff'
+    backgroundColor: '#FAFAFB'
   },
   tabBarIcon: {
     width: 21,
-    height: 21,
+    height: 23,
   },
   titleBox: {
     flexDirection: 'row',
     padding: 20,
+    backgroundColor: '#fff'
   },
   titleImage: {
-    width: 80,
-    height: 80,
+    width: 60,
+    height: 60,
     borderWidth: 0.5,
     borderColor: '#e0e0e0',
-    marginRight: 20
+    marginRight: 20,
+    borderRadius: 5,
   },
   titleText: {
-    fontSize: 18,
+    fontSize: 20,
+    marginBottom: 5,
+    marginTop: 5,
+  },
+  phone: {
+    fontSize: 16,
+    color: '#999',
     marginBottom: 10,
+  },
+  box: {
+    flexDirection: 'row',
+    height: 60,
+    alignItems: 'center',
+    paddingLeft: 20,
+  },
+  images: {
+    marginRight: 10
+  },
+  boxContent: {
+    flexDirection: 'row',
+    width: '91%',
+    height: '100%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#ddd',
+    paddingRight: 20,
   }
 });
