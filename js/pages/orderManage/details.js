@@ -64,7 +64,7 @@ const Details = (props) => {
   const submit = (params) => {
     if(params.edit) {
       addSubmit()
-    }else if(params.type === 'WAITING_DRIVER' && userType !== 'PARK') {
+    }else if(params.type === 'WAITING_DRIVER' && userType !== 'ADMIN') {
       driversubmit(params.id)
     }else if(params.type === 'CLEAN_REMOVE') {
       startDriver(params.id).then(res => {
@@ -76,7 +76,7 @@ const Details = (props) => {
         Toast.success('结束清运')
         navigation.pop()
       })
-    }else if(userType === 'PARK') {
+    }else if(userType === 'ADMIN') {
       agreeTransport(params.id).then(res => {
         Toast.success('提交成功')
         navigation.navigate({routeName: 'BottomNavigator', state: {key: 'Order', routeName: 'Order'}})
@@ -209,7 +209,7 @@ const Details = (props) => {
         )
       }
     }
-    if(userType === 'PARK' && detailsInfo.review_status === '未审核') {
+    if(userType === 'ADMIN' && detailsInfo.review_status === '未审核') {
       return (
         <View style={styles.button} >
           <Button type='primary' onPress={submit.bind(this, params)}>同意清运</Button>

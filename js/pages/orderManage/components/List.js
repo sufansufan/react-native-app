@@ -26,9 +26,12 @@ const ListItem = (props) => {
     return (
       <TouchableOpacity onPress={goToDetails.bind(this, item)} activeOpacity={0.6} key={item + new Date().getTime()}>
         <View style={styles.listBox}>
-          <Text style={{ width: '75%'}}>
-            <Text style={{fontSize: 18}}>{item.company.name}-预计清运时间{item.created_at}</Text>
-          </Text>
+          <View style={{ width: '75%'}}>
+            <Text style={{fontSize: 16}}>{item.company.name}</Text>
+            <View>
+              <Text style={{marginTop: 2, color: '#999',}}>预计清运时间 {item.created_at}</Text>
+            </View>
+          </View>
           <View style={{width: '20%', alignItems: 'flex-end',}}>
             <Icon name='right'></Icon>
           </View>
@@ -40,7 +43,7 @@ const ListItem = (props) => {
     if (showFoot === 1) {
         return (
             <View style={{height:30, alignItems:'center',justifyContent:'flex-start',}}>
-                <Text style={{color:'#999999',fontSize:14,marginTop:5,marginBottom:5,}}>
+                <Text style={{color:'#999999',fontSize:14,marginTop:5,}}>
                     没有更多数据了
                 </Text>
             </View>

@@ -29,10 +29,10 @@ const ListItem = (props) => {
         <TouchableOpacity onPress={goToDetails.bind(this)}  key={item.id + new Date().getTime()} >
           <View style={{paddingLeft: 20, paddingRight: 20, borderBottomWidth: 0.5, borderColor: '#ddd'}}>
             <View style={{ height: 60, justifyContent:'center' }}>
-              <Text style={{ width: '100%', fontSize: 18}}>
+              <Text style={{ width: '100%', fontSize: 16}}>
                 {item.title}
               </Text>
-              <Text style={{ width: '100%', fontSize: 16, color: '#999', marginTop: 2}}>
+              <Text style={{ width: '100%', fontSize: 14, color: '#999', marginTop: 2}}>
                 { item.created_at }
               </Text>
             </View>

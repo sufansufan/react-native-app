@@ -54,28 +54,28 @@ export default class MyPage extends Component {
               </View>
               <View style={{ height: 60, justifyContent: 'center'}}>
                 <Text style={styles.titleText}>用户名：{userInfo.name}</Text>
-                <Text style={styles.phone}>联系电话：1387814123</Text>
+                <Text style={styles.phone}>联系电话：{userInfo.phone}</Text>
               </View>
             </View>
             <View style={{marginTop: 10, backgroundColor: '#fff'}}>
               <TouchableOpacity>
                 <View style={styles.box}>
                   <View style={styles.images}>
-                    <Image resizeMode={'contain'} style={{width: 20, height:20}} source={require('../../images/banben.png')}></Image>
+                    <Image resizeMode={'contain'} style={{width: 16, height:16}} source={require('../../images/banben.png')}></Image>
                   </View>
                   <View style={styles.boxContent}>
-                    <Text style={{fontSize: 20}}>版本号</Text>
-                    <Text style={{fontSize: 20, color: '#999'}}>1.0.0</Text>
+                    <Text style={{fontSize: 16}}>版本号</Text>
+                    <Text style={{fontSize: 16, color: '#999'}}>1.0.0</Text>
                   </View>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity>
                 <View style={styles.box}>
                   <View style={styles.images}>
-                    <Image resizeMode={'contain'} style={{width: 20, height:20}} source={require('../../images/shuazi.png')}></Image>
+                    <Image resizeMode={'contain'} style={{width: 16, height:16}} source={require('../../images/shuazi.png')}></Image>
                   </View>
                   <View style={styles.boxContent}>
-                    <Text style={{fontSize: 20}}>清除缓存</Text>
+                    <Text style={{fontSize: 16}}>清除缓存</Text>
                     {/* <Text style={{fontSize: 20, color: '#999'}}>1.0.0</Text> */}
                   </View>
                 </View>
@@ -83,10 +83,10 @@ export default class MyPage extends Component {
               <TouchableOpacity onPress={this.onButtonClick}>
                 <View style={styles.box}>
                   <View style={styles.images}>
-                    <Image resizeMode={'contain'} style={{width: 20, height:20}} source={require('../../images/exit.png')}></Image>
+                    <Image resizeMode={'contain'} style={{width: 16, height:16}} source={require('../../images/exit.png')}></Image>
                   </View>
                   <View style={styles.boxContent}>
-                    <Text style={{fontSize: 20}}>退出登录</Text>
+                    <Text style={{fontSize: 16}}>退出登录</Text>
                     {/* <Text style={{fontSize: 20, color: '#999'}}>1.0.0</Text> */}
                   </View>
                 </View>

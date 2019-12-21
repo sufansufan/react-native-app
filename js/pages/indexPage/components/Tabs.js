@@ -34,7 +34,7 @@ const TabBar = (props) => {
             <ListItem {...props}></ListItem>
           </View>
         </View> : <View style={style}>
-          <Text>Content of Second Tab</Text>
+          <Text style={{color: '#999', height: 50, lineHeight: 50}}>暂无系统消息</Text>
         </View>}
       {/* <Tabs tabs={tabs} ref={tabRef} onChange={onChange} style={{ width: '100%'}} onTabClick={onTabClick}>
         <View style={style}>
@@ -53,7 +53,7 @@ const style = {
   alignItems: 'center',
   justifyContent: 'center',
   backgroundColor: '#fff',
-  marginTop: 10
+  marginTop: 10,
 }
 const styles = StyleSheet.create({
   tabBox: {

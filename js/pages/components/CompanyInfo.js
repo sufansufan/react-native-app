@@ -193,7 +193,7 @@ const CompanyInfo = (props) => {
       return (
         displayEditor()
       )
-    }else if(edit === false && type === 'WAITING_DRIVER' && company.user_type !== 'PARK') {
+    }else if(edit === false && type === 'WAITING_DRIVER' && company.user_type !== 'ADMIN') {
       return (
         displayEditor()
       )

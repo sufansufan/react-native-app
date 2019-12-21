@@ -53,7 +53,8 @@ const Login = (props) =>  {
               value={userInfo.password}
               placeholder='请输入密码'
               textContentType='password'
-              autoComplete='password'
+              secureTextEntry={true}
+              autoComplete={'password'}
             >
             </TextInput>
           </View>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import {View, Text, StyleSheet, TextInput } from 'react-native';
-import { Button, Toast, Provider} from '@ant-design/react-native';
+import {View, Text, StyleSheet, TextInput, SafeAreaView } from 'react-native';
+import { Button, Toast, Provider } from '@ant-design/react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import NavBar from '../components/NavBar'
 import TitleInfo from '../components/TitleInfo'
@@ -52,60 +52,63 @@ const AddWaste = (props) => {
   }
   return (
     <KeyboardAwareScrollView>
-      <Provider>
-        <NavBar {...props} title='联单管理' hideRight={true} pressLeft={back}></NavBar>
-        <TitleInfo title='固废信息列表'/>
-        <View style={styles.container}>
-          <View style={styles.contentBox}>
-            <Text style={styles.font}>固废名称</Text>
-            <TextInput
-              style={styles.input}
-              placeholder='请输入固废名称'
-              onChangeText={text => setWasteInfo({...wasteInfo, name: text})}
-              value={wasteInfo.name}
-            />
+      <SafeAreaView style={{flex: 1}}>
+        <Provider>
+          <NavBar {...props} title='联单管理' hideRight={true} pressLeft={back}></NavBar>
+          <TitleInfo title='固废信息列表'/>
+          <View style={styles.container}>
+            <View style={styles.contentBox}>
+              <Text style={styles.font}>固废名称</Text>
+              <TextInput
+                style={styles.input}
+                placeholder='请输入固废名称'
+                onChangeText={text => setWasteInfo({...wasteInfo, name: text})}
+                value={wasteInfo.name}
+              />
+            </View>
+            <View style={styles.contentBox}>
+              <Text style={styles.font}>固废来源</Text>
+              <TextInput
+                style={styles.input}
+                placeholder='请输入固废来源'
+                onChangeText={text => setWasteInfo({...wasteInfo, source: text})}
+                value={wasteInfo.source}
+              />
+            </View>
+            <View style={styles.contentBox}>
+              <Text style={styles.font}>固废储存地址</Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={text => setWasteInfo({...wasteInfo, storage_location: text})}
+                value={wasteInfo.storage_location}
+                placeholder='请输入固废地址'
+              />
+            </View>
+            <View style={styles.contentBox}>
+              <Text style={styles.font}>固废吨数</Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={text => setWasteInfo({...wasteInfo, quantity: text})}
+                value={wasteInfo.quantity}
+                placeholder='请输入固废吨数'
+                keyboardType='numeric'
+              />
+            </View>
+            <View style={styles.contentBox}>
+              <Text style={styles.font}>备注</Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={text => setWasteInfo({...wasteInfo, note: text})}
+                placeholder='请输入备注'
+                value={wasteInfo.note}
+              />
+            </View>
+            <View style={styles.button}>
+              <Button type='primary' onPress={add}>新增</Button>
+            </View>
           </View>
-          <View style={styles.contentBox}>
-            <Text style={styles.font}>固废来源</Text>
-            <TextInput
-              style={styles.input}
-              placeholder='请输入固废来源'
-              onChangeText={text => setWasteInfo({...wasteInfo, source: text})}
-              value={wasteInfo.source}
-            />
-          </View>
-          <View style={styles.contentBox}>
-            <Text style={styles.font}>固废储存地址</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={text => setWasteInfo({...wasteInfo, storage_location: text})}
-              value={wasteInfo.storage_location}
-              placeholder='请输入固废地址'
-            />
-          </View>
-          <View style={styles.contentBox}>
-            <Text style={styles.font}>固废吨数</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={text => setWasteInfo({...wasteInfo, quantity: text})}
-              value={wasteInfo.quantity}
-              placeholder='请输入固废吨数'
-            />
-          </View>
-          <View style={styles.contentBox}>
-            <Text style={styles.font}>备注</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={text => setWasteInfo({...wasteInfo, note: text})}
-              placeholder='请输入备注'
-              value={wasteInfo.note}
-            />
-          </View>
-          <View style={styles.button}>
-            <Button type='primary' onPress={add}>新增</Button>
-          </View>
-        </View>
-      </Provider>
+        </Provider>
+      </SafeAreaView>
     </KeyboardAwareScrollView>
   );
 }

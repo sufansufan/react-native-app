@@ -54,7 +54,7 @@ export default class IndexPage extends Component {
       <SafeAreaView style={{flex: 1}}>
         <View style={styles.container}>
           <NavBar {...this.props} hideLeft={true} hideRight={true} title='首页'></NavBar>
-          <View style={{paddingBottom: 10, paddingTop: 10, backgroundColor: '#fff'}}>
+          <View style={{backgroundColor: '#fff'}}>
             <Title></Title>
           </View>
           <TabBar {...this.props}></TabBar>
