@@ -22,7 +22,7 @@ const Login = (props) =>  {
     }
     loginByUsername({username, password,}).then(res => {
       if(res.data.error_code === 9999) {
-        Toast.fail(res.data.msg, 5)
+        Toast.fail(res.data.msg, 2)
       }else {
         AsyncStorage.setItem('userInfo', JSON.stringify(res.data))
         navigation.replace('BottomNavigator')

@@ -170,7 +170,7 @@ export default class OrderManage extends Component {
             <SafeAreaView style={{flex:1}}>
                 <View style={styles.container}>
                     <Provider>
-                        <NavBar {...this.props} hideLeft={true} title='联单管理' pickerData={this.state.pickerData} pickerChange={this.pickerChange} hideRight={this.state.userType ==='DRIVER' ? true : false}></NavBar>
+                        <NavBar {...this.props} hideLeft={true} title='联单管理' pickerData={this.state.pickerData} pickerChange={this.pickerChange} hideRight={this.state.userType ==='DRIVER' ? true : this.state.userType ==='ADMIN' ? true : this.state.userType ==='PARK' ? true : false}></NavBar>
                         <View style={styles.scrollContainer}>
                             <ListItem {...this.props} orderList={this.state.orderList} getOrderListFromList={this.getOrderListFromList.bind(this)} showFoot={this.state.showFoot} isRefreshing={this.state.isRefreshing}></ListItem>
                         </View>

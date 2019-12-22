@@ -14,7 +14,7 @@ const MessageDetails = (props) => {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
       >
-        <Text>通知详情</Text>
+        <Text style={{textAlign:'center', color: '#999', lineHeight: 40, fontSize: 14}}>暂无通知详情</Text>
       </ScrollView>
     </SafeAreaView>
   )
