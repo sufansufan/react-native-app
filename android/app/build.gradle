@@ -120,7 +120,6 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 def enableHermes = project.ext.react.get("enableHermes", false);
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -143,7 +142,7 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file("./my-release-key.keystore")
+            storeFile file("./gu-fei-key.keystore")
             storePassword "gufeiapp"
             keyAlias "gu-fei-alias"
             keyPassword "gufeiapp"
