@@ -30,6 +30,7 @@ const Details = (props) => {
   useEffect(()=>{
     (async function () {
       let { company, user_type } = JSON.parse(await AsyncStorage.getItem('userInfo'))
+
       setUserType(user_type)
       setCompany({...company, user_type})
       if(!params.edit) {
@@ -146,14 +147,12 @@ const Details = (props) => {
         )
       }
       if(paramsType === 'WAITING_DRIVER') {
-        return null
+        return (
+          <SceneImage {...props} edit={params.edit}  imageInfo={detailsInfo.imageInfo}/>
+        )
       }
     }else if (userType === 'DISPOSAL') {
       return null
-    }else {
-      return (
-        <SceneImage {...props} edit={params.edit}  imageInfo={detailsInfo.imageInfo}/>
-      )
     }
     if(userType === 'DRIVER') {
       if(paramsType === 'CLEAN_REMOVE') {
@@ -173,6 +172,19 @@ const Details = (props) => {
           </>
         )
       }
+      if(paramsType === 'FINISH' || paramsType === 'END_REMOVE') {
+        return (
+          <>
+            <SceneImage {...props} edit={params.edit}  imageInfo={detailsInfo.imageInfo}/>
+            <SceneImage {...props} edit={false} title='装运现场照片'  imageInfo={detailsInfo.install_images} id={params.id}/>
+            <SceneImage {...props} edit={false} title='卸货现场图片'  imageInfo={detailsInfo.uninstall_images} id={params.id}/>
+          </>
+        )
+      }
+    }else {
+      return (
+        <SceneImage {...props} edit={params.edit}  imageInfo={detailsInfo.imageInfo}/>
+      )
     }
     // else {
     //   return (

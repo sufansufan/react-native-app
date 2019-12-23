@@ -50,7 +50,7 @@ export default class MyPage extends Component {
             <NavBar {...this.props} hideLeft={true} hideRight={true} title='个人中心'></NavBar>
             <View style={styles.titleBox}>
               <View style={styles.titleImage}>
-                <Image  style={{width: '100%', height: '100%', borderRadius: 5}} source={{uri: url}}></Image>
+                <Image  style={{width: '80%', height: '80%', borderRadius: 5}} source={require('../../images/user.png')}></Image>
               </View>
               <View style={{ height: 60, justifyContent: 'center'}}>
                 <Text style={styles.titleText}>用户名：{userInfo.name}</Text>
@@ -134,6 +134,8 @@ const styles = StyleSheet.create({
     borderColor: '#e0e0e0',
     marginRight: 20,
     borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   titleText: {
     fontSize: 20,

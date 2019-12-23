@@ -42,7 +42,6 @@ const AddWaste = (props) => {
     const item = JSON.parse(await AsyncStorage.getItem('wasteInfo'))
     var wasteInfoArray = []
     item ? wasteInfoArray =  [...item, wasteInfo] : wasteInfoArray = [wasteInfo]
-    console.log(wasteInfoArray)
     await AsyncStorage.setItem('wasteInfo', JSON.stringify(wasteInfoArray))
     back()
   }

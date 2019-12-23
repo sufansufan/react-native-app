@@ -8,6 +8,7 @@ const ListItem = (props) => {
   const { navigation, orderList, getOrderListFromList, showFoot, isRefreshing, } = props;
   const goToDetails = (item) => {
     const { status, id } = item
+    console.log(status)
     if(status === '等待分配司机') {
       navigation.navigate({routeName: 'OrderDetails', params: {id, edit: false, type: 'WAITING_DRIVER' }})
     }else if(status === '已经分配司机等待清运') {
