@@ -24,6 +24,7 @@ const CompanyInfo = (props) => {
       label: ''
     }
   })
+  console.log(company, 8888)
   const changeCompany = (value) => {
     const data = handleCompanyData.length && handleCompanyData.filter(item => (item.value === value[0]))[0]
     AsyncStorage.setItem('CompanyInfo', JSON.stringify(data))
@@ -238,7 +239,7 @@ const CompanyInfo = (props) => {
           <TextInput
             style={styles.input}
             // onChangeText={text => onChangeText(text)}
-            value={company.se_contact_name}
+            value={company.contact_name}
             editable={false}
           />
         </View>
@@ -247,7 +248,7 @@ const CompanyInfo = (props) => {
           <TextInput
             style={styles.input}
             // onChangeText={text => onChangeText(text)}
-            value={company.se_contact_phone}
+            value={company.contact_phone}
             editable={false}
           />
         </View>

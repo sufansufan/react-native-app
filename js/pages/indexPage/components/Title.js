@@ -14,7 +14,7 @@ const Title = () => {
         </View>
       </View> */}
       <View style={styles.titleRight}>
-      <Image  style={{width: '100%', height: '100%'}} source={{uri: url}}></Image>
+      <Image  style={{width: '100%', height: '100%'}} source={require('../../../images/home.png')}></Image>
       </View>
     </View>
   )

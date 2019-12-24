@@ -5,8 +5,6 @@ import AsyncStorage from '@react-native-community/async-storage';
 import NavBar from "../components/NavBar";
 const Item = List.Item;
 
-const url = 'https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/crop%3D0%2C185%2C700%2C462%3Bc0%3Dbaike92%2C5%2C5%2C92%2C30/sign=4a46f83ddf43ad4bb2611c80bf32769e/d788d43f8794a4c2ee6be2b300f41bd5ac6e39d9.jpg'
-
 export default class MyPage extends Component {
   static navigationOptions = {
     tabBarLabel: '我的',

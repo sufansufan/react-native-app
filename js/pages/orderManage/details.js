@@ -19,6 +19,7 @@ const Details = (props) => {
   const [company, setCompany] = useState({})
   const [userType, setUserType] = useState('')
   const [detailsInfo, setDetailsInfo] = useState({})
+  const [statusType, setStatusType] = useState('')
   useEffect(() => {
     if(params) {
       setRightText(params.navRightText)
@@ -30,12 +31,22 @@ const Details = (props) => {
   useEffect(()=>{
     (async function () {
       let { company, user_type } = JSON.parse(await AsyncStorage.getItem('userInfo'))
-
       setUserType(user_type)
       setCompany({...company, user_type})
       if(!params.edit) {
         getOrderDetails(params.id).then((res) => {
-          const {disposal_company_name, images, solid_waste:{items}, actions, company, driver_name, car_code, install_images, uninstall_images, quantity_burning, quantity_landfill, quantity_recyclable, review_status} = res
+          const {disposal_company_name, images, solid_waste:{items}, actions, company, driver_name, car_code, install_images, uninstall_images, quantity_burning, quantity_landfill, quantity_recyclable, review_status, status} = res
+          if(status === '等待分配司机') {
+            setStatusType('WAITING_DRIVER')
+          }else if(status === '已经分配司机等待清运') {
+            setStatusType('CLEAN_REMOVE')
+          }else if(status === '开始清运'){
+            setStatusType('START_REMOVE')
+          }else if(status === '结束清运'){
+            setStatusType('END_REMOVE')
+          }else if(status === '已完成'){
+            setStatusType('FINISH')
+          }
           setDetailsInfo(
             {
               companyInfo: {
@@ -44,7 +55,7 @@ const Details = (props) => {
                 car_code,
                 quantity_burning,
                 quantity_landfill,
-                quantity_recyclable
+                quantity_recyclable,
               },
               wasteInfo: items,
               imageInfo: images,
@@ -65,14 +76,14 @@ const Details = (props) => {
   const submit = (params) => {
     if(params.edit) {
       addSubmit()
-    }else if(params.type === 'WAITING_DRIVER' && userType !== 'ADMIN') {
+    }else if(statusType === 'WAITING_DRIVER' && userType !== 'ADMIN') {
       driversubmit(params.id)
-    }else if(params.type === 'CLEAN_REMOVE') {
+    }else if(statusType === 'CLEAN_REMOVE') {
       startDriver(params.id).then(res => {
         Toast.success('开始清运')
         navigation.pop()
       })
-    }else if(params.type === 'START_REMOVE') {
+    }else if(statusType === 'START_REMOVE') {
       finishDriver(params.id).then(res => {
         Toast.success('结束清运')
         navigation.pop()
@@ -134,19 +145,19 @@ const Details = (props) => {
   }
   const displaySignResource = (userType, paramsType) => {
     if(userType === 'COMPANY' && !params.edit) {
-      if(paramsType === 'END_REMOVE') {
+      if(statusType === 'END_REMOVE') {
         return (
           <>
             <SignInfo {...props} id={params.id}/>
           </>
         )
       }
-      if(paramsType === 'FINISH') {
+      if(statusType === 'FINISH') {
         return (
           <ResourceInfo  {...props} id={params.id} companyInfo={detailsInfo.companyInfo}/>
         )
       }
-      if(paramsType === 'WAITING_DRIVER') {
+      if(statusType === 'WAITING_DRIVER') {
         return (
           <SceneImage {...props} edit={params.edit}  imageInfo={detailsInfo.imageInfo}/>
         )
@@ -155,7 +166,7 @@ const Details = (props) => {
       return null
     }
     if(userType === 'DRIVER') {
-      if(paramsType === 'CLEAN_REMOVE') {
+      if(statusType === 'CLEAN_REMOVE') {
         return (
           <>
             <SceneImage {...props} edit={params.edit}  imageInfo={detailsInfo.imageInfo}/>
@@ -163,7 +174,7 @@ const Details = (props) => {
           </>
         )
       }
-      if(paramsType === 'START_REMOVE') {
+      if(statusType === 'START_REMOVE') {
         return (
           <>
             <SceneImage {...props} edit={params.edit}  imageInfo={detailsInfo.imageInfo}/>
@@ -172,7 +183,7 @@ const Details = (props) => {
           </>
         )
       }
-      if(paramsType === 'FINISH' || paramsType === 'END_REMOVE') {
+      if(statusType === 'FINISH' || statusType === 'END_REMOVE') {
         return (
           <>
             <SceneImage {...props} edit={params.edit}  imageInfo={detailsInfo.imageInfo}/>
@@ -195,10 +206,10 @@ const Details = (props) => {
     // }
   }
   const displayBtn = (params) => {
-    if(userType === 'COMPANY' && params.type === 'WAITING_DRIVER'){
+    if(userType === 'COMPANY' && statusType === 'WAITING_DRIVER'){
       return null
     }
-    if(params.edit || userType === 'COMPANY' && params.type === 'WAITING_DRIVER' || userType === 'DISPOSAL' && params.type === 'WAITING_DRIVER') {
+    if(params.edit || userType === 'COMPANY' && statusType === 'WAITING_DRIVER' || userType === 'DISPOSAL' && statusType === 'WAITING_DRIVER') {
       return (
         <View style={styles.button} >
           <Button type='primary' onPress={submit.bind(this, params)}>提交</Button>
@@ -206,14 +217,14 @@ const Details = (props) => {
       )
     }
     if(userType === 'DRIVER'){
-      if(params.type === 'CLEAN_REMOVE') {
+      if(statusType === 'CLEAN_REMOVE') {
         return (
           <View style={styles.button} >
             <Button type='primary' onPress={submit.bind(this, params)}>开始清运</Button>
           </View>
         )
       }
-      if(params.type === 'START_REMOVE') {
+      if(statusType === 'START_REMOVE') {
         return (
           <View style={styles.button} >
             <Button type='primary' onPress={submit.bind(this, params)}>结束清运</Button>
@@ -243,12 +254,12 @@ const Details = (props) => {
                 showsVerticalScrollIndicator={false}
               >
                 <View>
-                  <CompanyInfo {...props} company={company} edit={params.edit} companyInfo={detailsInfo.companyInfo} type={params.type} />
+                  <CompanyInfo {...props} company={company} edit={params.edit} companyInfo={detailsInfo.companyInfo} type={statusType} />
                   <ChangeInfo {...props} edit={params.edit} wasteInfo={detailsInfo.wasteInfo}/>
-                  {displaySignResource(userType, params.type)}
+                  {displaySignResource(userType, statusType)}
                 </View>
                   {displayBtn(params)}
-                { params.type !== 'WAITING_DRIVER' && detailsInfo.actions && detailsInfo.actions.can_cancel ? <CancelBtn id={params.id} {...props}/> : null}
+                { statusType !== 'WAITING_DRIVER' && detailsInfo.actions && detailsInfo.actions.can_cancel ? <CancelBtn id={params.id} {...props}/> : null}
               </ScrollView>
             </View>
           </KeyboardAvoidingView>
