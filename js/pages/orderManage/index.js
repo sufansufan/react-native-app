@@ -47,6 +47,11 @@ export default class OrderManage extends Component {
                 // if(value[0]==='WAITING_DRIVER'){
                 //     navigation.navigate({routeName: 'OrderDetails', params: {userType, edit: true, type: 'WAITING_DRIVER'}})
                 // }
+            }else if(userType==='DRIVER') {
+                this.setState({
+                    orderList: []
+                })
+                this.fetchOrderList(value[0], '', '0')
             }
         }
     }
@@ -121,7 +126,12 @@ export default class OrderManage extends Component {
                 userType: user_type,
                 userInfo,
             })
-            this.fetchOrderList('ALL')
+
+            if(user_type === 'DRIVER') {
+                this.fetchOrderList('IN_PROGRESS')
+            }else {
+                this.fetchOrderList('ALL')
+            }
             switch (user_type) {
                 case 'COMPANY':
                     this.setState({
@@ -159,6 +169,20 @@ export default class OrderManage extends Component {
                         ]
                     })
                     break;
+                case 'DRIVER':
+                    this.setState({
+                        pickerData: [
+                            {
+                            value: 'IN_PROGRESS',
+                            label: '未完成'
+                            },
+                            {
+                            value: 'COMPLETED',
+                            label: '已完成'
+                            }
+                        ]
+                    })
+                    break;
                 default:
                     break;
             }
@@ -170,7 +194,7 @@ export default class OrderManage extends Component {
             <SafeAreaView style={{flex:1}}>
                 <View style={styles.container}>
                     <Provider>
-                        <NavBar {...this.props} hideLeft={true} title='联单管理' pickerData={this.state.pickerData} pickerChange={this.pickerChange} hideRight={this.state.userType ==='DRIVER' ? true : this.state.userType ==='ADMIN' ? true : this.state.userType ==='PARK' ? true : false}></NavBar>
+                        <NavBar {...this.props} hideLeft={true} title='联单管理' pickerData={this.state.pickerData} pickerChange={this.pickerChange} hideRight={this.state.userType ==='ADMIN' ? true : this.state.userType ==='PARK' ? true : false}></NavBar>
                         <View style={styles.scrollContainer}>
                             <ListItem {...this.props} orderList={this.state.orderList} getOrderListFromList={this.getOrderListFromList.bind(this)} showFoot={this.state.showFoot} isRefreshing={this.state.isRefreshing}></ListItem>
                         </View>
