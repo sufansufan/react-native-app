@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, TextInput } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage';
 import { Button, Toast, Provider  } from '@ant-design/react-native';
 import { loginByUsername } from '../../utils/api/login'
+import { upgrade } from "../../utils/api/home/index";
 
 const Login = (props) =>  {
   const [userInfo, setUserInfo] = useState({
@@ -25,8 +26,14 @@ const Login = (props) =>  {
         Toast.fail(res.data.msg, 2)
       }else {
         AsyncStorage.setItem('userInfo', JSON.stringify(res.data))
+        getVersion()
         navigation.replace('BottomNavigator')
       }
+    })
+  }
+  const getVersion = () => {
+    upgrade().then(({ version }) => {
+      AsyncStorage.setItem('version', JSON.stringify(version))
     })
   }
   return (

@@ -1,4 +1,4 @@
-package com.myapp;
+package com.curve.gufei;
 
 import com.facebook.react.ReactActivity;
 

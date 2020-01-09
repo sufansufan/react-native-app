@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.myapp">
+  package="com.curve.gufei">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -24,6 +24,8 @@
         </intent-filter>
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+      <meta-data android:name="JPUSH_CHANNEL" android:value="${JPUSH_CHANNEL}" />
+      <meta-data android:name="JPUSH_APPKEY" android:value="${JPUSH_APPKEY}" />
     </application>
 
 </manifest>

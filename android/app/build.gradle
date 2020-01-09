@@ -126,11 +126,15 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.myapp"
+        applicationId "com.curve.gufei" // com.curve.gufei com.curve.gufei
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        manifestPlaceholders = [
+                JPUSH_APPKEY: "d5121e055768941002d39692",   //在此替换你的APPKey  dd3ffdd4e935bd431a98d7fc
+                JPUSH_CHANNEL: "developer-default"        //在此替换你的channel
+        ]
     }
     splits {
         abi {
@@ -184,6 +188,8 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation project(':react-native-image-picker')
+    implementation project(':jpush-react-native')
+    implementation project(':jcore-react-native')
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
         debugImplementation files(hermesPath + "hermes-debug.aar")

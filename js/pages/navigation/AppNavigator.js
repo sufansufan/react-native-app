@@ -9,6 +9,7 @@ import Login from '../login/index'
 import OrderDetails from '../orderManage/details'
 import AddWaste from '../orderManage/addWaste'
 import MessageDetails  from '../indexPage/details'
+import ChangePasswordPage from "../myPage/password"
 
 
 const BottomNavigator =  createMaterialBottomTabNavigator({
@@ -40,6 +41,9 @@ export default createAppContainer(
     },
     MessageDetails: {
       screen: MessageDetails
+    },
+    ChangePasswordPage: {
+      screen: ChangePasswordPage
     }
   },{
     initialRouteName: 'BottomNavigator',

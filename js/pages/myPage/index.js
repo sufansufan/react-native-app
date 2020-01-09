@@ -15,14 +15,17 @@ export default class MyPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-       userInfo: ''
+       userInfo: '',
+       version: ''
     }
   }
 
   async componentDidMount() {
     let info = JSON.parse(await AsyncStorage.getItem('userInfo'))
+    let version = JSON.parse(await AsyncStorage.getItem('version'))
     this.setState({
-      userInfo: info
+      userInfo: info,
+      version,
     })
   }
   onButtonClick = () => {
@@ -39,8 +42,12 @@ export default class MyPage extends Component {
       } },
     ]);
   }
+  changePassword = () => {
+    const { navigation } = this.props
+    navigation.navigate({routeName: 'ChangePasswordPage'})
+  }
   render() {
-    const { userInfo } = this.state
+    const { userInfo, version } = this.state
     return (
       <Provider>
         <SafeAreaView style={{ flex: 1}}>
@@ -51,8 +58,8 @@ export default class MyPage extends Component {
                 <Image  style={{width: '80%', height: '80%', borderRadius: 5}} source={require('../../images/user.png')}></Image>
               </View>
               <View style={{ height: 60, justifyContent: 'center'}}>
-                <Text style={styles.titleText}>用户名：{userInfo.name}</Text>
-                <Text style={styles.phone}>联系电话：{userInfo.phone}</Text>
+                <Text style={styles.titleText}>用户名：{userInfo && userInfo.name}</Text>
+                <Text style={styles.phone}>联系电话：{userInfo && userInfo.phone}</Text>
               </View>
             </View>
             <View style={{marginTop: 10, backgroundColor: '#fff'}}>
@@ -63,7 +70,7 @@ export default class MyPage extends Component {
                   </View>
                   <View style={styles.boxContent}>
                     <Text style={{fontSize: 16}}>版本号</Text>
-                    <Text style={{fontSize: 16, color: '#999'}}>1.0.0</Text>
+                    <Text style={{fontSize: 16, color: '#999'}}>{version}</Text>
                   </View>
                 </View>
               </TouchableOpacity>
@@ -75,6 +82,16 @@ export default class MyPage extends Component {
                   <View style={styles.boxContent}>
                     <Text style={{fontSize: 16}}>清除缓存</Text>
                     {/* <Text style={{fontSize: 20, color: '#999'}}>1.0.0</Text> */}
+                  </View>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={this.changePassword}>
+                <View style={styles.box}>
+                  <View style={styles.images}>
+                    <Image resizeMode={'contain'} style={{width: 16, height:16}} source={require('../../images/shuazi.png')}></Image>
+                  </View>
+                  <View style={styles.boxContent}>
+                    <Text style={{fontSize: 16}}>修改密码</Text>
                   </View>
                 </View>
               </TouchableOpacity>

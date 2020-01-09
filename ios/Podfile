@@ -38,6 +38,10 @@ target 'myAPP' do
 
 
 
+  pod 'JPush', :path => '../node_modules/jpush-react-native'
+
+  pod 'JCore', :path => '../node_modules/jcore-react-native'
+
   target 'myAPPTests' do
     inherit! :search_paths
     # Pods for testing

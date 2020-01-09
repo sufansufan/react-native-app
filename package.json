@@ -17,6 +17,8 @@
     "babel-plugin-import": "^1.13.0",
     "babel-preset-expo": "^7.1.0",
     "babel-preset-react-native": "5.0.0",
+    "jcore-react-native": "^1.7.5",
+    "jpush-react-native": "^2.7.5",
     "prop-types": "^15.7.2",
     "qs": "^6.9.1",
     "react": "16.9.0",
