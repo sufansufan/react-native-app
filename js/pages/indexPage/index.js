@@ -12,11 +12,10 @@ export default class IndexPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      msg: 3,
+      msg: 0,
       registerID: ''
     }
   }
-
   static navigationOptions = {
     tabBarLabel: '首页',
     tabBarIcon: ({ focused }) => {
@@ -26,7 +25,7 @@ export default class IndexPage extends Component {
       require('../../images/main.png');
       return (
         <View>
-          <View style={{
+          {/* <View style={{
               width:12,
               height:12,
               justifyContent:"center",
@@ -37,8 +36,9 @@ export default class IndexPage extends Component {
               right:-8,
               top:-4,
           }}>
-              <Text style={[{fontSize:10, color:"#fff", textAlign:"center",}]}>3</Text>
-        </View>
+              <Text style={[{fontSize:10, color:"#fff", textAlign:"center",}]}></Text>
+        </View> */}
+
           <Image source={icon} style={styles.tabBarIcon}/>
       </View>
       )
